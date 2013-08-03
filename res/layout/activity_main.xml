@@ -1,0 +1,141 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <Button
+        android:id="@+id/auth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:onClick="onOauth"
+        android:text="OAUTH2.0" />
+
+    <Button
+        android:id="@+id/sso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_toRightOf="@id/auth"
+        android:text="单点登录sso"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/apiCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_toRightOf="@id/sso"
+        android:text="注销"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button1"
+        android:layout_alignBottom="@+id/button1"
+        android:layout_toRightOf="@+id/button1"
+        android:onClick="sendMessage"
+        android:text="@string/button_send" />
+
+    <TextView
+        android:id="@+id/show"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/auth"
+        android:layout_marginTop="18dp" />
+
+<!--     <Button -->
+<!--         android:id="@+id/button_getUserId" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_alignBaseline="@+id/button2" -->
+<!--         android:layout_alignBottom="@+id/button2" -->
+<!--         android:layout_toRightOf="@+id/button2" -->
+<!--         android:onClick="getUserId" -->
+<!--         android:text="@string/button_getUserId" /> -->
+
+<!--     <Button -->
+<!--         android:id="@+id/button3" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_above="@+id/edit_message" -->
+<!--         android:layout_toRightOf="@+id/button_getUserId" -->
+<!--         android:onClick="getFriendList" -->
+<!--         android:text="@string/button_getFriendList" /> -->
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/show"
+        android:layout_marginTop="60dp"
+        android:onClick="share"
+        android:text="@string/button_share" />
+
+    <TextView
+        android:id="@+id/myshow"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/editAuto"
+        android:layout_marginTop="23dp" />
+
+    <Button
+        android:id="@+id/button_add_at"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/edit_message"
+        android:layout_alignBottom="@+id/edit_message"
+        android:layout_alignParentRight="true"
+        android:onClick="addFriend"
+        android:text="@string/button_add_at" />
+
+    <EditText
+        android:id="@+id/edit_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/button2"
+        android:layout_toLeftOf="@+id/button_add_at"
+        android:ems="10"
+        android:hint="@string/edit_message" />
+
+    <AutoCompleteTextView
+        android:id="@+id/editAuto"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/button_add_at"
+        android:layout_marginTop="20dp"
+        android:completionThreshold="1"
+        android:ems="10"
+        android:hint="@string/edit_auto_complete_message" />
+
+    <EditText
+        android:id="@+id/edit_movie_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="98dp"
+        android:layout_toLeftOf="@+id/button_getMovie"
+        android:hint="@string/edit_movie_name" />
+
+    <Button
+        android:id="@+id/button_getMovie"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/edit_movie_name"
+        android:layout_alignParentRight="true"
+        android:onClick="getDoubanMovie"
+        android:text="@string/button_getMovie" />
+
+</RelativeLayout>
