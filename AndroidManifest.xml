@@ -37,7 +37,7 @@
                 <data android:mimeType="video/*" />
             </intent-filter>
 
-            <!-- For these schemes were not particular MIME type has been                 supplied, we are a good candidate. -->
+            <!--   y!  For these schemes were not particular MIME type has been                 supplied, we are a good candidate. -->
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.VIEW" /> -->
 
