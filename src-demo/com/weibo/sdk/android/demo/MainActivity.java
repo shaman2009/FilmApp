@@ -154,11 +154,6 @@ public class MainActivity extends Activity {
 			Log.e(keyName, String.valueOf(b.get(keyName)));
 		}
 		editText.setText(String.valueOf(b.get("android.intent.extra.TEXT")));
-		
-		
-
-		
-		
 	}
 
 	@Override
