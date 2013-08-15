@@ -1,7 +1,7 @@
 package com.weibo.sdk.android.api;
 
 import com.weibo.sdk.android.Oauth2AccessToken;
-import com.weibo.sdk.android.WeiboParameters;
+import com.weibo.sdk.android.MyParameters;
 import com.weibo.sdk.android.net.RequestListener;
 /**
  * 此类封装了公共服务的接口，详情见<a href="http://open.weibo.com/wiki/API%E6%96%87%E6%A1%A3_V2#.E5.85.AC.E5.85.B1.E6.9C.8D.E5.8A.A1">公共服务接口</a>
@@ -24,7 +24,7 @@ public class CommonAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void getCity( String province, CAPITAL capital,String language, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("province", province);
 	      if(null!=capital){
 	          params.add("capital", capital.name().toLowerCase());
@@ -39,7 +39,7 @@ public class CommonAPI extends WeiboAPI {
      * @param language 返回的语言版本，zh-cn：简体中文、zh-tw：繁体中文、english：英文，默认为zh-cn。
      */
     public void getCountry(CAPITAL capital,String language, RequestListener listener) {
-        WeiboParameters params = new WeiboParameters();
+        MyParameters params = new MyParameters();
       if(null!=capital){
           params.add("capital", capital.name().toLowerCase());
       }
@@ -54,7 +54,7 @@ public class CommonAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void getTimezone( String language, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("language", language);
 		request( SERVER_URL_PRIX + "/get_timezone.json", params, HTTPMETHOD_GET, listener);
 	}

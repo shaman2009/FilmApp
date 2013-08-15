@@ -1,7 +1,7 @@
 package com.weibo.sdk.android.api;
 
 import com.weibo.sdk.android.Oauth2AccessToken;
-import com.weibo.sdk.android.WeiboParameters;
+import com.weibo.sdk.android.MyParameters;
 import com.weibo.sdk.android.net.RequestListener;
 /**
  * 此类封装了评论的接口，详情见<a href="http://open.weibo.com/wiki/API%E6%96%87%E6%A1%A3_V2#.E8.AF.84.E8.AE.BA">评论接口</a>
@@ -27,7 +27,7 @@ public class CommentsAPI extends WeiboAPI {
 	 */
 	public void show(long id, long since_id, long max_id, int count, int page,
 			AUTHOR_FILTER filter_by_author,RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("id", id);
 		params.add("since_id", since_id);
 		params.add("max_id", max_id);
@@ -48,7 +48,7 @@ public class CommentsAPI extends WeiboAPI {
 	 */
 	public void byME(long since_id, long max_id, int count, int page,
 			SRC_FILTER filter_by_source,RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("since_id", since_id);
 		params.add("max_id", max_id);
 		params.add("count", count);
@@ -70,7 +70,7 @@ public class CommentsAPI extends WeiboAPI {
 	 */
 	public void toME(long since_id, long max_id, int count, int page,
 			AUTHOR_FILTER filter_by_author, SRC_FILTER filter_by_source,RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("since_id", since_id);
 		params.add("max_id", max_id);
 		params.add("count", count);
@@ -92,7 +92,7 @@ public class CommentsAPI extends WeiboAPI {
 	 */
 	public void timeline(long since_id, long max_id, int count, int page,
 			boolean trim_user,RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("since_id", since_id);
 		params.add("max_id", max_id);
 		params.add("count", count);
@@ -118,7 +118,7 @@ public class CommentsAPI extends WeiboAPI {
 	 */
 	public void mentions(long since_id, long max_id, int count, int page,
 			AUTHOR_FILTER filter_by_author, SRC_FILTER filter_by_source,RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("since_id", since_id);
 		params.add("max_id", max_id);
 		params.add("count", count);
@@ -135,7 +135,7 @@ public class CommentsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void showBatch( long[] cids, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		StringBuilder strb = new StringBuilder();
 		for (long cid : cids) {
 			strb.append(String.valueOf(cid)).append(",");
@@ -154,7 +154,7 @@ public class CommentsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void create(String comment, long id, boolean comment_ori, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("comment", comment);
 		params.add("id", id);
 		if (comment_ori) {
@@ -172,7 +172,7 @@ public class CommentsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void destroy(long cid, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("cid", cid);
 		request( SERVER_URL_PRIX + "/destroy.json", params, HTTPMETHOD_POST, listener);
 	}
@@ -184,7 +184,7 @@ public class CommentsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void destroyBatch( long[] ids, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		StringBuilder strb = new StringBuilder();
 		for (long cid : ids) {
 			strb.append(String.valueOf(cid)).append(",");
@@ -206,7 +206,7 @@ public class CommentsAPI extends WeiboAPI {
 	 */
 	public void reply(long cid, long id, String comment, boolean without_mention,
 			boolean comment_ori, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("cid", cid);
 		params.add("id", id);
 		params.add("comment", comment);

@@ -1,7 +1,7 @@
 package com.weibo.sdk.android.api;
 
 import com.weibo.sdk.android.Oauth2AccessToken;
-import com.weibo.sdk.android.WeiboParameters;
+import com.weibo.sdk.android.MyParameters;
 import com.weibo.sdk.android.net.RequestListener;
 /**
  * 此类封装了收藏的接口，详情见<a href="http://open.weibo.com/wiki/API%E6%96%87%E6%A1%A3_V2#.E6.94.B6.E8.97.8F">公共接口</a>
@@ -23,7 +23,7 @@ public class FavoritesAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void favorites(int count, int page, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("count", count);
 		params.add("page", page);
 		request( SERVER_URL_PRIX + ".json", params, HTTPMETHOD_GET, listener);
@@ -37,7 +37,7 @@ public class FavoritesAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void ids( int count, int page, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("count", count);
 		params.add("page", page);
 		request( SERVER_URL_PRIX + "/ids.json", params, HTTPMETHOD_GET, listener);
@@ -50,7 +50,7 @@ public class FavoritesAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void show(long id, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("id", id);
 		request( SERVER_URL_PRIX + "/show.json", params, HTTPMETHOD_GET, listener);
 	}
@@ -64,7 +64,7 @@ public class FavoritesAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void byTags(long tid, int count, int page, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("tid", tid);
 		params.add("count", count);
 		params.add("page", page);
@@ -79,7 +79,7 @@ public class FavoritesAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void tags( int count, int page, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("count", count);
 		params.add("page", page);
 		request( SERVER_URL_PRIX + "/tags.json", params, HTTPMETHOD_GET, listener);
@@ -94,7 +94,7 @@ public class FavoritesAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void byTagsIds( long tid, int count, int page, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("tid", tid);
 		params.add("count", count);
 		params.add("page", page);
@@ -108,7 +108,7 @@ public class FavoritesAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void create( long id, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("id", id);
 		request( SERVER_URL_PRIX + "/create.json", params, HTTPMETHOD_POST, listener);
 	}
@@ -120,7 +120,7 @@ public class FavoritesAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void destroy( long id, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("id", id);
 		request( SERVER_URL_PRIX + "/destroy.json", params, HTTPMETHOD_POST, listener);
 	}
@@ -132,7 +132,7 @@ public class FavoritesAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void destroyBatch( long[] ids, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		StringBuilder strb = new StringBuilder();
 		for (long id : ids) {
 			strb.append(String.valueOf(id)).append(",");
@@ -150,7 +150,7 @@ public class FavoritesAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void tagsUpdate( long id, String[] tags, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("id", id);
 		StringBuilder strb = new StringBuilder();
 		for (String tag : tags) {
@@ -169,7 +169,7 @@ public class FavoritesAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void tagsUpdateBatch( long id, String tag, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("tid", id);
 		params.add("tag", tag);
 		request( SERVER_URL_PRIX + "/tags/update_batch.json", params, HTTPMETHOD_POST, listener);
@@ -182,7 +182,7 @@ public class FavoritesAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void tagsDestroyBatch( long tid, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("tid", tid);
 		request( SERVER_URL_PRIX + "/tags/destroy_batch.json", params, HTTPMETHOD_POST, listener);
 	}

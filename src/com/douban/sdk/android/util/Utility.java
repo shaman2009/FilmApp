@@ -1,4 +1,4 @@
-package com.weibo.sdk.android.util;
+package com.douban.sdk.android.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -10,6 +10,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+
+import com.douban.sdk.android.Douban;
+import com.douban.sdk.android.MyParameters;
 
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -24,8 +27,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.weibo.sdk.android.Weibo;
-import com.weibo.sdk.android.MyParameters;
 
 public class Utility {
     private static char[] encodes = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".toCharArray();
@@ -452,7 +453,7 @@ public class Utility {
         }
         public static boolean revitionPostImageSize( String picfile) {
             try {
-            	if(Weibo.isWifi){
+            	if(Douban.isWifi){
             		revitionImageSizeHD(picfile, 1600 , 75);
             	}
             	else{

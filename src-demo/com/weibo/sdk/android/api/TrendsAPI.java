@@ -1,7 +1,7 @@
 package com.weibo.sdk.android.api;
 
 import com.weibo.sdk.android.Oauth2AccessToken;
-import com.weibo.sdk.android.WeiboParameters;
+import com.weibo.sdk.android.MyParameters;
 import com.weibo.sdk.android.net.RequestListener;
 /**
  * 该类封装了话题接口，详情请参考<a href="http://open.weibo.com/wiki/API%E6%96%87%E6%A1%A3_V2#.E8.AF.9D.E9.A2.98">话题接口</a>
@@ -22,7 +22,7 @@ public class TrendsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void trends( long uid, int count, int page, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("uid", uid);
 		params.add("count", count);
 		params.add("page", page);
@@ -35,7 +35,7 @@ public class TrendsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void isFollow( String trend_name, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("trend_name", trend_name);
 		request( SERVER_URL_PRIX + "/is_follow.json", params, HTTPMETHOD_GET, listener);
 	}
@@ -46,7 +46,7 @@ public class TrendsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void hourly( boolean base_app, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		if (base_app) {
 			params.add("base_app", 1);
 		} else {
@@ -61,7 +61,7 @@ public class TrendsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void daily( boolean base_app, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		if (base_app) {
 			params.add("base_app", 1);
 		} else {
@@ -76,7 +76,7 @@ public class TrendsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void weekly( boolean base_app, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		if (base_app) {
 			params.add("base_app", 0);
 		} else {
@@ -91,7 +91,7 @@ public class TrendsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void follow( String trend_name, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("trend_name", trend_name);
 		request( SERVER_URL_PRIX + "/follow.json", params, HTTPMETHOD_POST, listener);
 	}
@@ -102,7 +102,7 @@ public class TrendsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void destroy( long trend_id, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("trend_id", trend_id);
 		request( SERVER_URL_PRIX + "/destroy.json", params, HTTPMETHOD_POST, listener);
 	}

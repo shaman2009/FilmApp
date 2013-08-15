@@ -1,7 +1,7 @@
 package com.weibo.sdk.android.api;
 
 import com.weibo.sdk.android.Oauth2AccessToken;
-import com.weibo.sdk.android.WeiboParameters;
+import com.weibo.sdk.android.MyParameters;
 import com.weibo.sdk.android.net.RequestListener;
 /**
  * 该类封装了微博的注册接口，详情请参考<a href="http://open.weibo.com/wiki/API%E6%96%87%E6%A1%A3_V2#.E6.B3.A8.E5.86.8C">注册接口</a>
@@ -22,7 +22,7 @@ public class RegisterAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void suggestions( String nickname, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("nickname", nickname);
 		request( SERVER_URL_PRIX + "/verify_nickname.json", params, HTTPMETHOD_GET, listener);
 	}

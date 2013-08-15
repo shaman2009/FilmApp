@@ -1,7 +1,7 @@
 package com.weibo.sdk.android.api;
 
 import com.weibo.sdk.android.Oauth2AccessToken;
-import com.weibo.sdk.android.WeiboParameters;
+import com.weibo.sdk.android.MyParameters;
 import com.weibo.sdk.android.net.RequestListener;
 /**
  * 该类封装了标签接口，详情请参考<a href="http://open.weibo.com/wiki/API%E6%96%87%E6%A1%A3_V2#.E6.A0.87.E7.AD.BE">标签接口</a>
@@ -22,7 +22,7 @@ public class TagsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void tags( long uid, int count, int page, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("uid", uid);
 		params.add("count", count);
 		params.add("page", page);
@@ -35,7 +35,7 @@ public class TagsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void tagsBatch( String[] uids, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		StringBuilder strb = new StringBuilder();
 		for (String uid : uids) {
 			strb.append(uid).append(",");
@@ -51,7 +51,7 @@ public class TagsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void suggestions( int count, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("count", count);
 		request( SERVER_URL_PRIX + "/suggestions.json", params, HTTPMETHOD_GET, listener);
 	}
@@ -62,7 +62,7 @@ public class TagsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void create( String[] tags, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		StringBuilder strb = new StringBuilder();
 		for (String tag : tags) {
 			strb.append(tag).append(",");
@@ -78,7 +78,7 @@ public class TagsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void destroy( long tag_id, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("tag_id", tag_id);
 		request( SERVER_URL_PRIX + "/destroy.json", params, HTTPMETHOD_POST, listener);
 	}
@@ -89,7 +89,7 @@ public class TagsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void destroyBatch( String[] ids, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		StringBuilder strb = new StringBuilder();
 		for (String id : ids) {
 			strb.append(id).append(",");

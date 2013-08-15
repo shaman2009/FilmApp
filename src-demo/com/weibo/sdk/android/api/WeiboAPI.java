@@ -1,7 +1,7 @@
 package com.weibo.sdk.android.api;
 
 import com.weibo.sdk.android.Oauth2AccessToken;
-import com.weibo.sdk.android.WeiboParameters;
+import com.weibo.sdk.android.MyParameters;
 import com.weibo.sdk.android.net.AsyncWeiboRunner;
 import com.weibo.sdk.android.net.RequestListener;
 /**
@@ -135,7 +135,7 @@ public abstract class WeiboAPI {
 		NONE, CUR_STATUSES, ORIGAL_STATUSES, BOTH
 	}
 	
-	protected void request( final String url, final WeiboParameters params,
+	protected void request( final String url, final MyParameters params,
 			final String httpMethod,RequestListener listener) {
 		params.add("access_token", accessToken);
 		AsyncWeiboRunner.request(url, params, httpMethod, listener);

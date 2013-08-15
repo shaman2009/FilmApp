@@ -1,7 +1,7 @@
 package com.weibo.sdk.android.api;
 
 import com.weibo.sdk.android.Oauth2AccessToken;
-import com.weibo.sdk.android.WeiboParameters;
+import com.weibo.sdk.android.MyParameters;
 import com.weibo.sdk.android.net.RequestListener;
 
 /**
@@ -28,7 +28,7 @@ public class PlaceAPI extends WeiboAPI {
 	 */
 	public void friendsTimeline( long since_id, long max_id, int count, int page,
 			boolean only_attentions, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("since_id", since_id);
 		params.add("max_id", max_id);
 		params.add("count", count);
@@ -54,7 +54,7 @@ public class PlaceAPI extends WeiboAPI {
 	 */
 	public void userTimeline( long uid, long since_id, long max_id, int count, int page,
 			boolean base_app, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("uid", uid);
 		params.add("since_id", since_id);
 		params.add("max_id", max_id);
@@ -81,7 +81,7 @@ public class PlaceAPI extends WeiboAPI {
 	 */
 	public void poiTimeline( String poiid, long since_id, long max_id, int count,
 			int page, boolean base_app, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("poiid", poiid);
 		params.add("since_id", since_id);
 		params.add("max_id", max_id);
@@ -113,7 +113,7 @@ public class PlaceAPI extends WeiboAPI {
 	public void nearbyTimeline( String lat, String lon, int range, long starttime,
 	        long endtime, SORT3 sort, int count, int page, boolean base_app, boolean offset,
 			RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("lat", lat);
 		params.add("long", lon);
 		params.add("range", range);
@@ -142,7 +142,7 @@ public class PlaceAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void statusesShow( long id, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("id", id);
 		request( SERVER_URL_PRIX + "/statuses/show.json", params, HTTPMETHOD_GET, listener);
 	}
@@ -155,7 +155,7 @@ public class PlaceAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void usersShow( long uid, boolean base_app, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("uid", uid);
 		if (base_app) {
 			params.add("base_app", 1);
@@ -176,7 +176,7 @@ public class PlaceAPI extends WeiboAPI {
 	 */
 	public void usersCheckins( long uid, int count, int page, boolean base_app,
 			RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("uid", uid);
 		params.add("count", count);
 		params.add("page", page);
@@ -199,7 +199,7 @@ public class PlaceAPI extends WeiboAPI {
 	 */
 	public void usersPhotos( long uid, int count, int page, boolean base_app,
 			RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("uid", uid);
 		params.add("count", count);
 		params.add("page", page);
@@ -222,7 +222,7 @@ public class PlaceAPI extends WeiboAPI {
 	 */
 	public void usersTips( long uid, int count, int page, boolean base_app,
 			RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("uid", uid);
 		params.add("count", count);
 		params.add("page", page);
@@ -243,7 +243,7 @@ public class PlaceAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void poisShow( String poiid, boolean base_app, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("poiid", poiid);
 		if (base_app) {
 			params.add("base_app", 1);
@@ -264,7 +264,7 @@ public class PlaceAPI extends WeiboAPI {
 	 */
 	public void poisUsers( String poiid, int count, int page, boolean base_app,
 			RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("poiid", poiid);
 		params.add("count", count);
 		params.add("page", page);
@@ -288,7 +288,7 @@ public class PlaceAPI extends WeiboAPI {
 	 */
 	public void poisPhotos( String poiid, int count, int page, SORT2 sort, boolean base_app,
 			RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("uid", poiid);
 		params.add("count", count);
 		params.add("page", page);
@@ -313,7 +313,7 @@ public class PlaceAPI extends WeiboAPI {
 	 */
 	public void poisTips( String poiid, int count, int page, SORT2 sort,
 			boolean base_app, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("poiid", poiid);
 		params.add("count", count);
 		params.add("page", page);
@@ -338,7 +338,7 @@ public class PlaceAPI extends WeiboAPI {
 	 */
 	public void poisSearch( String keyword, String city, String category, int count,
 			int page, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("keyword", keyword);
 		params.add("city", city);
 		params.add("category", category);
@@ -355,7 +355,7 @@ public class PlaceAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void poisCategory( int pid, boolean returnALL, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("pid", pid);
 		if (returnALL) {
 			params.add("flag", 1);
@@ -380,7 +380,7 @@ public class PlaceAPI extends WeiboAPI {
 	 */
 	public void nearbyPois( String lat, String lon, int range, String q,
 			String category, int count, int page, boolean offset, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("lat", lat);
 		params.add("long", lon);
 		params.add("range", range);
@@ -412,7 +412,7 @@ public class PlaceAPI extends WeiboAPI {
 	 */
 	public void nearbyUsers( String lat, String lon, int range, long starttime,
 	        long endtime, SORT3 sort, int count, int page, boolean offset, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("lat", lat);
 		params.add("long", lon);
 		params.add("range", range);
@@ -445,7 +445,7 @@ public class PlaceAPI extends WeiboAPI {
 	 */
 	public void nearbyPhotos( String lat, String lon, int range, long starttime,
 	        long endtime, SORT3 sort, int count, int page, boolean offset, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("lat", lat);
 		params.add("long", lon);
 		params.add("range", range);
@@ -473,7 +473,7 @@ public class PlaceAPI extends WeiboAPI {
 	 */
 	public void poisAddCheckin( String poiid, String status, String pic,
 			boolean isPublic, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("poiid", poiid);
 		params.add("status", status);
 		params.add("pic", pic);
@@ -497,7 +497,7 @@ public class PlaceAPI extends WeiboAPI {
 	 */
 	public void poisAddPhoto( String poiid, String status, String pic,
 			boolean isPublic, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("poiid", poiid);
 		params.add("status", status);
 		params.add("pic", pic);
@@ -519,7 +519,7 @@ public class PlaceAPI extends WeiboAPI {
 	 */
 	public void poisAddTip( String poiid, String status, boolean isPublic,
 			RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("poiid", poiid);
 		params.add("status", status);
 		if (isPublic) {

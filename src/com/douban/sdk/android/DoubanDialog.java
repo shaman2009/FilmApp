@@ -1,4 +1,4 @@
-package com.weibo.sdk.android;
+package com.douban.sdk.android;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,23 +35,19 @@ import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
+import com.douban.sdk.android.util.Utility;
 import com.weibo.sdk.android.demo.R;
-import com.weibo.sdk.android.util.Utility;
-/**
- * 用来显示用户认证界面的dialog，封装了一个webview，通过redirect地址中的参数来获取accesstoken
- * @author xiaowei6@staff.sina.com.cn
- *
- */
-public class WeiboDialog extends Dialog {
+public class DoubanDialog extends Dialog {
     
 	static  FrameLayout.LayoutParams FILL = new FrameLayout.LayoutParams(
 			ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
 	private String mUrl;
-	private WeiboAuthListener mListener;
+	private DoubanAuthListener mListener;
 	private ProgressDialog mSpinner;
 	private WebView mWebView;
 	private RelativeLayout webViewContainer;
 	private RelativeLayout mContent;
+	
 
 	private final static String TAG = "Weibo-WebView";
 	
@@ -60,7 +56,7 @@ public class WeiboDialog extends Dialog {
     private  static int top_margin=0;
     private  static int right_margin=0;
     private  static int bottom_margin=0;
-	public WeiboDialog(Context context, String url, WeiboAuthListener listener) {
+	public DoubanDialog(Context context, String url, DoubanAuthListener listener) {
 		super(context,theme);
 		mUrl = url;
 		mListener = listener;
@@ -86,7 +82,6 @@ public class WeiboDialog extends Dialog {
 		this.getWindow().setFeatureDrawableAlpha(Window.FEATURE_OPTIONS_PANEL, 0);  
 		mContent = new RelativeLayout(getContext());
 		setUpWebView();
-
 		addContentView(mContent, new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
 	}
 
@@ -108,7 +103,7 @@ public class WeiboDialog extends Dialog {
 		mWebView.setVerticalScrollBarEnabled(false);
 		mWebView.setHorizontalScrollBarEnabled(false);
 		mWebView.getSettings().setJavaScriptEnabled(true);
-		mWebView.setWebViewClient(new WeiboDialog.WeiboWebViewClient());
+		mWebView.setWebViewClient(new DoubanDialog.WeiboWebViewClient());
 		mWebView.loadUrl(mUrl);
 		mWebView.setLayoutParams(FILL);
 		mWebView.setVisibility(View.INVISIBLE);
@@ -118,13 +113,12 @@ public class WeiboDialog extends Dialog {
 		RelativeLayout.LayoutParams lp0 = new RelativeLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT);
 		
         mContent.setBackgroundColor(Color.TRANSPARENT);
-        AssetManager asseets=WeiboDialog.this.getContext().getAssets();
+        AssetManager asseets=DoubanDialog.this.getContext().getAssets();
         InputStream is=null;
         try {
              try {
                is=asseets.open("weibosdk_dialog_bg.9.png");
-               DisplayMetrics dm = this.getContext().getResources()
-                       .getDisplayMetrics();
+               DisplayMetrics dm = this.getContext().getResources().getDisplayMetrics();
                float density=dm.density;
                lp0.leftMargin =(int) (10*density);
                lp0.topMargin = (int) (10*density);
@@ -182,7 +176,7 @@ public class WeiboDialog extends Dialog {
 	                Intent sendIntent = new Intent(Intent.ACTION_VIEW);  
 	                sendIntent.putExtra("address", url.replace("sms:", ""));  
 	                sendIntent.setType("vnd.android-dir/mms-sms");  
-	                WeiboDialog.this.getContext().startActivity(sendIntent);  
+	                DoubanDialog.this.getContext().startActivity(sendIntent);  
 	                return true;  
 	            }  
 			return super.shouldOverrideUrlLoading(view, url);
@@ -192,17 +186,17 @@ public class WeiboDialog extends Dialog {
 		public void onReceivedError(WebView view, int errorCode, String description,
 				String failingUrl) {
 			super.onReceivedError(view, errorCode, description, failingUrl);
-			mListener.onError(new WeiboDialogError(description, errorCode, failingUrl));
-			WeiboDialog.this.dismiss();
+			mListener.onError(new DoubanDialogError(description, errorCode, failingUrl));
+			DoubanDialog.this.dismiss();
 		}
 
 		@Override
 		public void onPageStarted(WebView view, String url, Bitmap favicon) {
 			Log.d(TAG, "onPageStarted URL: " + url);
-			if (url.startsWith(Weibo.redirecturl)) {
+			if (url.startsWith(Douban.redirecturl)) {
 				handleRedirectUrl(view, url);
 				view.stopLoading();
-				WeiboDialog.this.dismiss();
+				DoubanDialog.this.dismiss();
 				return;
 			}
 			super.onPageStarted(view, url, favicon);
@@ -238,10 +232,10 @@ public class WeiboDialog extends Dialog {
 			mListener.onCancel();
 		} else {
 			if(error_code==null){
-				mListener.onWeiboException(new WeiboException(error, 0));
+				mListener.onDoubanException(new DoubanException(error, 0));
 			}
 			else{
-				mListener.onWeiboException(new WeiboException(error, Integer.parseInt(error_code)));
+				mListener.onDoubanException(new DoubanException(error, Integer.parseInt(error_code)));
 			}
 			
 		}

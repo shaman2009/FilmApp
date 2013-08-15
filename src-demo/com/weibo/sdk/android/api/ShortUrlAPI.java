@@ -1,7 +1,7 @@
 package com.weibo.sdk.android.api;
 
 import com.weibo.sdk.android.Oauth2AccessToken;
-import com.weibo.sdk.android.WeiboParameters;
+import com.weibo.sdk.android.MyParameters;
 import com.weibo.sdk.android.net.RequestListener;
 /**
  * 该类封装了微博的短链接接口，详情请参考<a href="http://open.weibo.com/wiki/API%E6%96%87%E6%A1%A3_V2#.E7.9F.AD.E9.93.BE">短链接接口</a>
@@ -21,7 +21,7 @@ public class ShortUrlAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void shorten( String[] url_long, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		if(url_long!=null){
 		    int length=url_long.length;
             for (int i=0;i<length;i++) {
@@ -39,7 +39,7 @@ public class ShortUrlAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void expand( String[] url_short, RequestListener listener) {
-	    WeiboParameters params = new WeiboParameters();
+	    MyParameters params = new MyParameters();
 		if(url_short!=null){
 		    int length=url_short.length;
 		    for (int i=0;i<length;i++) {
@@ -57,7 +57,7 @@ public class ShortUrlAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void clicks( String[] url_short, RequestListener listener) {
-	    WeiboParameters params = new WeiboParameters();
+	    MyParameters params = new MyParameters();
 		if(url_short!=null){
             int length=url_short.length;
             for (int i=0;i<length;i++) {
@@ -74,7 +74,7 @@ public class ShortUrlAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void referers( String url_short, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("url_short", url_short);
 		request( SERVER_URL_PRIX + "/referers.json", params, HTTPMETHOD_GET, listener);
 	}
@@ -86,7 +86,7 @@ public class ShortUrlAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void locations( String url_short, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("url_short", url_short);
 		request( SERVER_URL_PRIX + "/locations.json", params, HTTPMETHOD_GET, listener);
 	}
@@ -98,7 +98,7 @@ public class ShortUrlAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void shareCounts( String[] url_short, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		if(url_short!=null){
             int length=url_short.length;
             for (int i=0;i<length;i++) {
@@ -120,7 +120,7 @@ public class ShortUrlAPI extends WeiboAPI {
 	 */
 	public void shareStatuses( String url_short, long since_id, long max_id, int count,
 			int page, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("url_short", url_short);
 		params.add("since_id", since_id);
 		params.add("max_id", max_id);
@@ -136,7 +136,7 @@ public class ShortUrlAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void commentCounts( String[] url_short, RequestListener listener) {
-	    WeiboParameters params = new WeiboParameters();
+	    MyParameters params = new MyParameters();
 		if(url_short!=null){
             int length=url_short.length;
             for (int i=0;i<length;i++) {
@@ -158,7 +158,7 @@ public class ShortUrlAPI extends WeiboAPI {
 	 */
 	public void comments( String url_short, long since_id, long max_id, int count,
 			int page, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("url_short", url_short);
 		params.add("since_id", since_id);
 		params.add("max_id", max_id);

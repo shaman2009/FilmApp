@@ -48,7 +48,7 @@ import org.apache.http.protocol.HTTP;
 import android.text.TextUtils;
 
 import com.weibo.sdk.android.WeiboException;
-import com.weibo.sdk.android.WeiboParameters;
+import com.weibo.sdk.android.MyParameters;
 import com.weibo.sdk.android.util.Utility;
 
 /**
@@ -77,7 +77,7 @@ public class HttpManager {
 	 * @return 响应结果
 	 * @throws WeiboException
 	 */
-	public static String openUrl(String url, String method, WeiboParameters params, String file) throws WeiboException {
+	public static String openUrl(String url, String method, MyParameters params, String file) throws WeiboException {
 		String result = "";
 		try {
 			HttpClient client = getNewHttpClient();
@@ -209,7 +209,7 @@ public class HttpManager {
 		}
 	}
 
-	private static void paramToUpload(OutputStream baos, WeiboParameters params)
+	private static void paramToUpload(OutputStream baos, MyParameters params)
 			throws WeiboException {
 		String key = "";
 		for (int loc = 0; loc < params.size(); loc++) {

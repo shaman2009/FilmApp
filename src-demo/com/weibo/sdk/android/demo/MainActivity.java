@@ -27,6 +27,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.douban.sdk.android.Douban;
+import com.douban.sdk.android.DoubanAuthListener;
+import com.douban.sdk.android.DoubanDialogError;
+import com.douban.sdk.android.DoubanException;
 import com.weibo.sdk.android.Oauth2AccessToken;
 import com.weibo.sdk.android.Weibo;
 import com.weibo.sdk.android.WeiboAuthListener;
@@ -41,16 +45,23 @@ import com.weibo.sdk.android.net.RequestListener;
 import com.weibo.sdk.android.sso.SsoHandler;
 import com.weibo.sdk.android.util.Utility;
 
+
 /**
  * 
- * @author liyan (liyan9@staff.sina.com.cn)
+ * @author feng_xiang
+ *
  */
 public class MainActivity extends Activity {
 
 	private Weibo mWeibo;
-	private static final String CONSUMER_KEY = "2867503323";// 替换为开发者的appkey，例如"1646212860";
-	private static final String REDIRECT_URL = "http://www.sina.com";
-	private Button authBtn, apiBtn, ssoBtn, cancelBtn;
+	private Douban mDouban;
+	private static final String WEIBO_CONSUMER_KEY = "2867503323";// 替换为开发者的appkey，例如"1646212860";
+	private static final String WEIBO_REDIRECT_URL = "http://jianshu.io/users/SLfZEb";
+	
+	private static final String DOUBAN_CONSUMER_KEY = "0e32be84b39035752a983b8e1ab0a05f";
+	private static final String DOUBAN_REDIRECT_URL = "http://shaman.logdown.com";
+	
+	private Button authBtn, apiBtn, ssoBtn, cancelBtn ,doubanAuthBtn;
 	private TextView mText;
 	private EditText mEditText;
 	public static Oauth2AccessToken accessToken;
@@ -73,16 +84,22 @@ public class MainActivity extends Activity {
 		JSONArray s = new JSONArray();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		mWeibo = Weibo.getInstance(CONSUMER_KEY, REDIRECT_URL);
-		
+		mWeibo = Weibo.getInstance(WEIBO_CONSUMER_KEY, WEIBO_REDIRECT_URL);
+		mDouban = Douban.getInstance(DOUBAN_CONSUMER_KEY, DOUBAN_REDIRECT_URL);
 //		mAutoText = (AutoCompleteTextView)findViewById(R.id .editAuto);  
 //		mAutoText.setAdapter(new ArrayAdapter<String>(this ,android.R.layout.simple_dropdown_item_1line ,items ));  
-
+		doubanAuthBtn = (Button) findViewById(R.id.doubanAuth);
+		doubanAuthBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mDouban.authorize(MainActivity.this, new DoubanAuthDialogListener());
+			}
+		});
 		authBtn = (Button) findViewById(R.id.auth);
 		authBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				mWeibo.authorize(MainActivity.this, new AuthDialogListener());
+				mWeibo.authorize(MainActivity.this, new WeiboAuthDialogListener());
 			}
 		});
 		ssoBtn = (Button) findViewById(R.id.sso);// 触发sso的按钮
@@ -100,7 +117,7 @@ public class MainActivity extends Activity {
 				 * 下面两个注释掉的代码，仅当sdk支持sso时有效，
 				 */
 				mSsoHandler = new SsoHandler(MainActivity.this, mWeibo);
-				mSsoHandler.authorize(new AuthDialogListener());
+				mSsoHandler.authorize(new WeiboAuthDialogListener());
 			}
 		});
 		cancelBtn = (Button) findViewById(R.id.apiCancel);
@@ -161,8 +178,34 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
+	class DoubanAuthDialogListener implements DoubanAuthListener {
 
-	class AuthDialogListener implements WeiboAuthListener {
+		@Override
+		public void onComplete(Bundle values) {
+			Toast.makeText(MainActivity.this, "Auth success", Toast.LENGTH_SHORT).show();
+		}
+
+		@Override
+		public void onDoubanException(DoubanException e) {
+			Toast.makeText(getApplicationContext(),"Auth exception : " + e.getMessage(), Toast.LENGTH_LONG).show();
+			
+		}
+
+		@Override
+		public void onError(DoubanDialogError e) {
+			Toast.makeText(getApplicationContext(),"Auth error : " + e.getMessage(), Toast.LENGTH_LONG).show();
+			
+		}
+
+		@Override
+		public void onCancel() {
+			Toast.makeText(getApplicationContext(), "Auth cancel",Toast.LENGTH_LONG).show();
+			
+		}
+		
+	}
+
+	class WeiboAuthDialogListener implements WeiboAuthListener {
 		@Override
 		public void onComplete(Bundle values) {
 			String token = values.getString("access_token");
@@ -187,21 +230,17 @@ public class MainActivity extends Activity {
 
 		@Override
 		public void onError(WeiboDialogError e) {
-			Toast.makeText(getApplicationContext(),
-					"Auth error : " + e.getMessage(), Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(),"Auth error : " + e.getMessage(), Toast.LENGTH_LONG).show();
 		}
 
 		@Override
 		public void onCancel() {
-			Toast.makeText(getApplicationContext(), "Auth cancel",
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "Auth cancel",Toast.LENGTH_LONG).show();
 		}
 
 		@Override
 		public void onWeiboException(WeiboException e) {
-			Toast.makeText(getApplicationContext(),
-					"Auth exception : " + e.getMessage(), Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(getApplicationContext(),"Auth exception : " + e.getMessage(), Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -274,12 +313,8 @@ public class MainActivity extends Activity {
 								Toast.makeText(MainActivity.this, "No result!",Toast.LENGTH_LONG).show();
 							}
 						});
-						
 						return;
 					}
-					
-					
-					
 					new Thread(new Runnable() {
 						@Override
 						public void run() {
@@ -288,7 +323,6 @@ public class MainActivity extends Activity {
 							Looper.loop();
 						}
 					}).start();
-					
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -592,5 +626,4 @@ public class MainActivity extends Activity {
 		// 启动一个新的activity 就是看到的 成功调用别的app了
 		startActivity(Intent.createChooser(intent, subject));
 	}
-
 }

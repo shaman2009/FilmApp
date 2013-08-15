@@ -1,4 +1,4 @@
-package com.weibo.sdk.android;
+package com.douban.sdk.android;
 
 import java.util.ArrayList;
 
@@ -9,13 +9,13 @@ import android.text.TextUtils;
  * 在发起网络请求时，用来存放请求参数的容器类
  * @author luopeng (luopeng@staff.sina.com.cn)
  */
-public class WeiboParameters {
+public class MyParameters {
 
 	private ArrayList<String> mKeys = new ArrayList<String>();
 	private ArrayList<String> mValues=new ArrayList<String>();
 	
 	
-	public WeiboParameters(){
+	public MyParameters(){
 		
 	}
 	
@@ -98,7 +98,7 @@ public class WeiboParameters {
 		return mKeys.size();
 	}
 	
-	public void addAll(WeiboParameters parameters){
+	public void addAll(MyParameters parameters){
 		for(int i = 0; i < parameters.size(); i++){
 			this.add(parameters.getKey(i), parameters.getValue(i));
 		}

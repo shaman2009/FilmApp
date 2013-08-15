@@ -3,7 +3,7 @@ package com.weibo.sdk.android.api;
 import android.text.TextUtils;
 
 import com.weibo.sdk.android.Oauth2AccessToken;
-import com.weibo.sdk.android.WeiboParameters;
+import com.weibo.sdk.android.MyParameters;
 import com.weibo.sdk.android.net.RequestListener;
 /**
  * 此类封装了账号的接口，详情见<a href="http://open.weibo.com/wiki/API%E6%96%87%E6%A1%A3_V2#.E8.B4.A6.E5.8F.B7">账号接口</a>
@@ -23,7 +23,7 @@ public class AccountAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void getPrivacy(RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		request( SERVER_URL_PRIX + "/get_privacy.json", params, HTTPMETHOD_GET,listener);
 	}
 
@@ -41,7 +41,7 @@ public class AccountAPI extends WeiboAPI {
 	 */
 	public void schoolList( int province, int city, int area, SCHOOL_TYPE type,
 			CAPITAL capital, String keyword, int count,RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("province", province);
 		params.add("city", city);
 		params.add("area", area);
@@ -60,7 +60,7 @@ public class AccountAPI extends WeiboAPI {
      * @param listener
      */
     public void rateLimitStatus(RequestListener listener) {
-        WeiboParameters params = new WeiboParameters();
+        MyParameters params = new MyParameters();
         request(SERVER_URL_PRIX + "/rate_limit_status.json", params, HTTPMETHOD_GET,listener);
     }
    
@@ -70,7 +70,7 @@ public class AccountAPI extends WeiboAPI {
      * @param listener
      */
     public void getUid(RequestListener listener) {
-        WeiboParameters params = new WeiboParameters();
+        MyParameters params = new MyParameters();
         request( SERVER_URL_PRIX + "/get_uid.json", params, HTTPMETHOD_GET,listener);
     }
 	/**
@@ -78,7 +78,7 @@ public class AccountAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void endSession(RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		request( SERVER_URL_PRIX + "/end_session.json", params, HTTPMETHOD_POST,listener);
 	}
 }

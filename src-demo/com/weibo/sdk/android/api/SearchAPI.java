@@ -1,7 +1,7 @@
 package com.weibo.sdk.android.api;
 
 import com.weibo.sdk.android.Oauth2AccessToken;
-import com.weibo.sdk.android.WeiboParameters;
+import com.weibo.sdk.android.MyParameters;
 import com.weibo.sdk.android.net.RequestListener;
 /**
  * 该类封装了微博的搜索接口，详情请参考<a href="http://open.weibo.com/wiki/API%E6%96%87%E6%A1%A3_V2#.E6.90.9C.E7.B4.A2">搜索接口</a>
@@ -22,7 +22,7 @@ public class SearchAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void users( String q, int count, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("q", q);
 		params.add("count", count);
 		request( SERVER_URL_PRIX + "/suggestions/users.json", params, HTTPMETHOD_GET,
@@ -37,7 +37,7 @@ public class SearchAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void statuses( String q, int count, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("q", q);
 		params.add("count", count);
 		request( SERVER_URL_PRIX + "/suggestions/statuses.json", params, HTTPMETHOD_GET,
@@ -53,7 +53,7 @@ public class SearchAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void schools( String q, int count, SCHOOL_TYPE type, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("q", q);
 		params.add("count", count);
 		params.add("type", type.ordinal());
@@ -69,7 +69,7 @@ public class SearchAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void companies( String q, int count, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("q", q);
 		params.add("count", count);
 		request( SERVER_URL_PRIX + "/suggestions/companies.json", params, HTTPMETHOD_GET,
@@ -84,7 +84,7 @@ public class SearchAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void apps( String q, int count, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("q", q);
 		params.add("count", count);
 		request( SERVER_URL_PRIX + "/suggestions/apps.json", params, HTTPMETHOD_GET, listener);
@@ -101,7 +101,7 @@ public class SearchAPI extends WeiboAPI {
 	 */
 	public void atUsers( String q, int count, FRIEND_TYPE type, RANGE range,
 			RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("q", q);
 		params.add("count", count);
 		params.add("type", type.ordinal());

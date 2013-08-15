@@ -50,24 +50,25 @@
         android:layout_below="@+id/auth"
         android:layout_marginTop="18dp" />
 
-<!--     <Button -->
-<!--         android:id="@+id/button_getUserId" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:layout_alignBaseline="@+id/button2" -->
-<!--         android:layout_alignBottom="@+id/button2" -->
-<!--         android:layout_toRightOf="@+id/button2" -->
-<!--         android:onClick="getUserId" -->
-<!--         android:text="@string/button_getUserId" /> -->
+    <!-- <Button -->
+    <!-- android:id="@+id/button_getUserId" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_alignBaseline="@+id/button2" -->
+    <!-- android:layout_alignBottom="@+id/button2" -->
+    <!-- android:layout_toRightOf="@+id/button2" -->
+    <!-- android:onClick="getUserId" -->
+    <!-- android:text="@string/button_getUserId" /> -->
 
-<!--     <Button -->
-<!--         android:id="@+id/button3" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:layout_above="@+id/edit_message" -->
-<!--         android:layout_toRightOf="@+id/button_getUserId" -->
-<!--         android:onClick="getFriendList" -->
-<!--         android:text="@string/button_getFriendList" /> -->
+
+    <!-- <Button -->
+    <!-- android:id="@+id/button3" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_above="@+id/edit_message" -->
+    <!-- android:layout_toRightOf="@+id/button_getUserId" -->
+    <!-- android:onClick="getFriendList" -->
+    <!-- android:text="@string/button_getFriendList" /> -->
 
     <Button
         android:id="@+id/button1"
@@ -137,5 +138,14 @@
         android:layout_alignParentRight="true"
         android:onClick="getDoubanMovie"
         android:text="@string/button_getMovie" />
+
+    <Button
+        android:id="@+id/doubanAuth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button2"
+        android:layout_alignParentLeft="true"
+        android:onClick="onOauth"
+        android:text="DoubanAuth" />
 
 </RelativeLayout>

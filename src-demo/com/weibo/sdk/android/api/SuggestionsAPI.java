@@ -1,7 +1,7 @@
 package com.weibo.sdk.android.api;
 
 import com.weibo.sdk.android.Oauth2AccessToken;
-import com.weibo.sdk.android.WeiboParameters;
+import com.weibo.sdk.android.MyParameters;
 import com.weibo.sdk.android.net.RequestListener;
 
 /**
@@ -27,7 +27,7 @@ public class SuggestionsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void usersHot( USER_CATEGORY category, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("category", category.name());
 		request( SERVER_URL_PRIX + "/users/hot.json", params, HTTPMETHOD_GET,
 				listener);
@@ -41,7 +41,7 @@ public class SuggestionsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void mayInterested( int count, int page, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("count", count);
 		params.add("page", page);
 		request( SERVER_URL_PRIX + "/users/may_interested.json", params, HTTPMETHOD_GET, listener);
@@ -55,7 +55,7 @@ public class SuggestionsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void byStatus( String content, int num, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("content", content);
 		params.add("num", num);
 		request( SERVER_URL_PRIX + "/users/may_interested.json", params, HTTPMETHOD_GET, listener);
@@ -71,7 +71,7 @@ public class SuggestionsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void statusesHot(STATUSES_TYPE type, boolean is_pic, int count, int page, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("type", type.ordinal()+1);
 		if (is_pic) {
 			params.add("is_pic", 1);
@@ -91,7 +91,7 @@ public class SuggestionsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void favoritesHot( int count, int page, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("count", count);
 		params.add("page", page);
 		request( SERVER_URL_PRIX + "/favorites/hot.json", params, HTTPMETHOD_GET, listener);
@@ -104,7 +104,7 @@ public class SuggestionsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void notInterested( long uid, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("uid", uid);
 		request( SERVER_URL_PRIX + "/users/not_interested.json", params, HTTPMETHOD_POST, listener);
 	}

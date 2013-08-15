@@ -1,6 +1,6 @@
 package com.weibo.sdk.android.doubanapi;
 
-import com.weibo.sdk.android.WeiboParameters;
+import com.weibo.sdk.android.MyParameters;
 import com.weibo.sdk.android.net.AsyncWeiboRunner;
 import com.weibo.sdk.android.net.RequestListener;
 
@@ -20,7 +20,7 @@ public class DoubanAPI {
 	
 	
 	
-	protected void request( final String url, final WeiboParameters params,
+	protected void request( final String url, final MyParameters params,
 			final String httpMethod,RequestListener listener) {
 //		params.add("access_token", accessToken);
 		AsyncWeiboRunner.request(url, params, httpMethod, listener);

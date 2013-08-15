@@ -3,7 +3,7 @@ package com.weibo.sdk.android.api;
 import android.text.TextUtils;
 
 import com.weibo.sdk.android.Oauth2AccessToken;
-import com.weibo.sdk.android.WeiboParameters;
+import com.weibo.sdk.android.MyParameters;
 import com.weibo.sdk.android.net.RequestListener;
 /**
  * 该类封装了微博接口，详情请参考<a href="http://open.weibo.com/wiki/API%E6%96%87%E6%A1%A3_V2#.E5.BE.AE.E5.8D.9A">微博接口</a>
@@ -27,7 +27,7 @@ public class StatusesAPI extends WeiboAPI {
 	 */
 	public void publicTimeline( int count, int page, boolean base_app,
 			RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("count", count);
 		params.add("page", page);
 		if (base_app) {
@@ -52,7 +52,7 @@ public class StatusesAPI extends WeiboAPI {
 	 */
 	public void friendsTimeline( long since_id, long max_id, int count, int page,
 			boolean base_app, FEATURE feature, boolean trim_user, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("since_id", since_id);
 		params.add("max_id", max_id);
 		params.add("count", count);
@@ -81,7 +81,7 @@ public class StatusesAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void friendsTimelineIds(long since_id, long max_id, int count, int page,boolean base_app, FEATURE feature, RequestListener listener){
-	    WeiboParameters params = new WeiboParameters();
+	    MyParameters params = new MyParameters();
         params.add("since_id", since_id);
         params.add("max_id", max_id);
         params.add("count", count);
@@ -109,7 +109,7 @@ public class StatusesAPI extends WeiboAPI {
 	 */
 	public void homeTimeline( long since_id, long max_id, int count, int page,
 			boolean base_app, FEATURE feature, boolean trim_user, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("since_id", since_id);
 		params.add("max_id", max_id);
 		params.add("count", count);
@@ -143,7 +143,7 @@ public class StatusesAPI extends WeiboAPI {
 	 */
 	public void userTimeline( long uid, long since_id, long max_id, int count, int page,
 			boolean base_app, FEATURE feature, boolean trim_user, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("uid", uid);
 		params.add("since_id", since_id);
 		params.add("max_id", max_id);
@@ -178,7 +178,7 @@ public class StatusesAPI extends WeiboAPI {
 	 */
 	public void userTimeline( String screen_name, long since_id, long max_id, int count,
 			int page, boolean base_app, FEATURE feature, boolean trim_user, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("screen_name", screen_name);
 		params.add("since_id", since_id);
 		params.add("max_id", max_id);
@@ -213,7 +213,7 @@ public class StatusesAPI extends WeiboAPI {
 	 */
 	public void userTimeline( long since_id, long max_id, int count,
 			int page, boolean base_app, FEATURE feature, boolean trim_user, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("since_id", since_id);
 		params.add("max_id", max_id);
 		params.add("count", count);
@@ -246,7 +246,7 @@ public class StatusesAPI extends WeiboAPI {
 	 */
 	public void userTimelineIds( long uid, long since_id, long max_id, int count,
 			int page, boolean base_app, FEATURE feature, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("uid", uid);
 		params.add("since_id", since_id);
 		params.add("max_id", max_id);
@@ -276,7 +276,7 @@ public class StatusesAPI extends WeiboAPI {
 	 */
 	public void userTimelineIds( String screen_name, long since_id, long max_id,
 			int count, int page, boolean base_app, FEATURE feature,	RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("screen_name", screen_name);
 		params.add("since_id", since_id);
 		params.add("max_id", max_id);
@@ -305,7 +305,7 @@ public class StatusesAPI extends WeiboAPI {
 	 */
 	public void repostTimeline( long id, long since_id, long max_id, int count, int page,
 			AUTHOR_FILTER filter_by_author, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("id", id);
 		params.add("since_id", since_id);
 		params.add("max_id", max_id);
@@ -328,7 +328,7 @@ public class StatusesAPI extends WeiboAPI {
 	 */
 	public void repostTimelineIds( long id, long since_id, long max_id, int count,
 			int page, AUTHOR_FILTER filter_by_author, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("id", id);
 		params.add("since_id", since_id);
 		params.add("max_id", max_id);
@@ -350,7 +350,7 @@ public class StatusesAPI extends WeiboAPI {
 	 */
 	public void repostByMe( long since_id, long max_id, int count, int page,
 			RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("since_id", since_id);
 		params.add("max_id", max_id);
 		params.add("count", count);
@@ -374,7 +374,7 @@ public class StatusesAPI extends WeiboAPI {
 	public void mentions( long since_id, long max_id, int count, int page,
 			AUTHOR_FILTER filter_by_author, SRC_FILTER filter_by_source,
 			TYPE_FILTER filter_by_type, boolean trim_user, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("since_id", since_id);
 		params.add("max_id", max_id);
 		params.add("count", count);
@@ -405,7 +405,7 @@ public class StatusesAPI extends WeiboAPI {
 	public void mentionsIds( long since_id, long max_id, int count, int page,
 			AUTHOR_FILTER filter_by_author, SRC_FILTER filter_by_source,
 			TYPE_FILTER filter_by_type, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("since_id", since_id);
 		params.add("max_id", max_id);
 		params.add("count", count);
@@ -431,7 +431,7 @@ public class StatusesAPI extends WeiboAPI {
 	public void bilateralTimeline(  long since_id, long max_id,
 			int count, int page, boolean base_app, FEATURE feature, boolean trim_user,
 			RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("since_id", since_id);
 		params.add("max_id", max_id);
 		params.add("count", count);
@@ -458,7 +458,7 @@ public class StatusesAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void show( long id, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("id", id);
 		request( SERVER_URL_PRIX + "/show.json", params, HTTPMETHOD_GET, listener);
 	}
@@ -471,7 +471,7 @@ public class StatusesAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void queryMID( long[] ids, TYPE type, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		if(1==ids.length){
 			params.add("id", ids[0]);
 		}else{
@@ -499,7 +499,7 @@ public class StatusesAPI extends WeiboAPI {
 	 */
 	public void queryID( String[] mids, TYPE type, boolean inbox, boolean isBase62,
 			RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		if(mids!=null){
 		    if(1 == mids.length){
 	            params.add("mid", mids[0]);
@@ -536,7 +536,7 @@ public class StatusesAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void hotRepostDaily( int count, boolean base_app, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("count", count);
 		if (base_app) {
 			params.add("base_app", 1);
@@ -554,7 +554,7 @@ public class StatusesAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void hotRepostWeekly( int count, boolean base_app, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("count", count);
 		if (base_app) {
 			params.add("base_app", 1);
@@ -573,7 +573,7 @@ public class StatusesAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void hotCommentsDaily( int count, boolean base_app, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("count", count);
 		if (base_app) {
 			params.add("base_app", 1);
@@ -592,7 +592,7 @@ public class StatusesAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void hotCommentsWeekly( int count, boolean base_app, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("count", count);
 		if (base_app) {
 			params.add("base_app", 0);
@@ -610,7 +610,7 @@ public class StatusesAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void count( String[] ids, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		StringBuilder strb = new StringBuilder();
 		for (String id : ids) {
 			strb.append(id).append(",");
@@ -630,7 +630,7 @@ public class StatusesAPI extends WeiboAPI {
 	 */
 	public void repost( long id, String status, COMMENTS_TYPE is_comment,
 			RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("id", id);
 		params.add("status", status);
 		params.add("is_comment", is_comment.ordinal());
@@ -644,7 +644,7 @@ public class StatusesAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void destroy( long id, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("id", id);
 		request( SERVER_URL_PRIX + "/destroy.json", params, HTTPMETHOD_POST, listener);
 	}
@@ -658,7 +658,7 @@ public class StatusesAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void update( String content, String lat, String lon, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("status", content);
 		if (!TextUtils.isEmpty(lon)) {
 			params.add("long", lon);
@@ -679,7 +679,7 @@ public class StatusesAPI extends WeiboAPI {
 	 */
 	public void upload( String content, String file, String lat, String lon,
 			RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("status", content);
 		params.add("pic", file);
 		if (!TextUtils.isEmpty(lon)) {
@@ -703,7 +703,7 @@ public class StatusesAPI extends WeiboAPI {
 	 */
 	public void uploadUrlText( String status, String imageUrl, String lat, String lon,
 			RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("status", status);
 		params.add("url", imageUrl);
 		if (!TextUtils.isEmpty(lon)) {
@@ -723,7 +723,7 @@ public class StatusesAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void emotions( EMOTION_TYPE type, LANGUAGE language, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("type", type.name());
 		params.add("language", language.name());
 		request( API_SERVER + "/emotions.json", params, HTTPMETHOD_GET, listener);

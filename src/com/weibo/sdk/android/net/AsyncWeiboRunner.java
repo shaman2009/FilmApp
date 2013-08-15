@@ -1,7 +1,7 @@
 package com.weibo.sdk.android.net;
 
 import com.weibo.sdk.android.WeiboException;
-import com.weibo.sdk.android.WeiboParameters;
+import com.weibo.sdk.android.MyParameters;
 
 /**
  * 
@@ -15,7 +15,7 @@ public class AsyncWeiboRunner {
      * @param httpMethod "GET"or “POST”
      * @param listener 回调对象
      */
-	public static void request(final String url, final WeiboParameters params,
+	public static void request(final String url, final MyParameters params,
 			final String httpMethod, final RequestListener listener) {
 		new Thread() {
 			@Override

@@ -1,7 +1,7 @@
 package com.weibo.sdk.android.api;
 
 import com.weibo.sdk.android.Oauth2AccessToken;
-import com.weibo.sdk.android.WeiboParameters;
+import com.weibo.sdk.android.MyParameters;
 import com.weibo.sdk.android.net.RequestListener;
 /**
  * 该类封装了用户接口，详情请参考<a href="http://open.weibo.com/wiki/API%E6%96%87%E6%A1%A3_V2#.E7.94.A8.E6.88.B7">用户接口</a>
@@ -20,7 +20,7 @@ public class UsersAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void show( long uid, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("uid", uid);
 		request( SERVER_URL_PRIX + "/show.json", params, HTTPMETHOD_GET, listener);
 	}
@@ -31,7 +31,7 @@ public class UsersAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void show( String screen_name, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("screen_name", screen_name);
 		request( SERVER_URL_PRIX + "/show.json", params, HTTPMETHOD_GET, listener);
 	}
@@ -42,7 +42,7 @@ public class UsersAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void domainShow( String domain, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("domain", domain);
 		request( SERVER_URL_PRIX + "/domain_show.json", params, HTTPMETHOD_GET, listener);
 	}
@@ -53,7 +53,7 @@ public class UsersAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void counts( long[] uids, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		StringBuilder strb = new StringBuilder();
 		for (long cid : uids) {
 			strb.append(String.valueOf(cid)).append(",");

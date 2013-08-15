@@ -1,7 +1,7 @@
 package com.weibo.sdk.android.api;
 
 import com.weibo.sdk.android.Oauth2AccessToken;
-import com.weibo.sdk.android.WeiboParameters;
+import com.weibo.sdk.android.MyParameters;
 import com.weibo.sdk.android.net.RequestListener;
 /**
  *  * 此类封装了关系的接口，详情见<a href=http://open.weibo.com/wiki/API%E6%96%87%E6%A1%A3_V2#.E5.85.B3.E7.B3.BB">关系接口</a>
@@ -26,7 +26,7 @@ public class FriendshipsAPI extends WeiboAPI {
 	 */
 	public void friends( long uid, int count, int cursor, boolean trim_status,
 			RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("uid", uid);
 		params.add("count", count);
 		params.add("cursor", cursor);
@@ -49,7 +49,7 @@ public class FriendshipsAPI extends WeiboAPI {
 	 */
 	public void friends( String screen_name, int count, int cursor,
 			boolean trim_status, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("screen_name", screen_name);
 		params.add("count", count);
 		params.add("cursor", cursor);
@@ -73,7 +73,7 @@ public class FriendshipsAPI extends WeiboAPI {
 	 */
 	public void inCommon( long uid, long suid, int count, int page, boolean trim_status,
 			RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("uid", uid);
 		params.add("suid", suid);
 		params.add("count", count);
@@ -96,7 +96,7 @@ public class FriendshipsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void bilateral( long uid, int count, int page, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("uid", uid);
 		params.add("count", count);
 		params.add("page", page);
@@ -113,7 +113,7 @@ public class FriendshipsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void bilateralIds( long uid, int count, int page, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("uid", uid);
 		params.add("count", count);
 		params.add("page", page);
@@ -130,7 +130,7 @@ public class FriendshipsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void friendsIds( long uid, int count, int cursor, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("uid", uid);
 		params.add("count", count);
 		params.add("cursor", cursor);
@@ -147,7 +147,7 @@ public class FriendshipsAPI extends WeiboAPI {
 	 */
 	public void friendsIds( String screen_name, int count, int cursor,
 			RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("screen_name", screen_name);
 		params.add("count", count);
 		params.add("cursor", cursor);
@@ -165,7 +165,7 @@ public class FriendshipsAPI extends WeiboAPI {
 	 */
 	public void followers( long uid, int count, int cursor, boolean trim_status,
 			RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("uid", uid);
 		params.add("count", count);
 		params.add("cursor", cursor);
@@ -188,7 +188,7 @@ public class FriendshipsAPI extends WeiboAPI {
 	 */
 	public void followers( String screen_name, int count, int cursor,
 			boolean trim_status, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("screen_name", screen_name);
 		params.add("count", count);
 		params.add("cursor", cursor);
@@ -209,7 +209,7 @@ public class FriendshipsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void followersIds( long uid, int count, int cursor, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("uid", uid);
 		params.add("count", count);
 		params.add("cursor", cursor);
@@ -226,7 +226,7 @@ public class FriendshipsAPI extends WeiboAPI {
 	 */
 	public void followersIds( String screen_name, int count, int cursor,
 			RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("screen_name", screen_name);
 		params.add("count", count);
 		params.add("cursor", cursor);
@@ -241,7 +241,7 @@ public class FriendshipsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void followersActive( long uid, int count, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("uid", uid);
 		params.add("count", count);
 		request( SERVER_URL_PRIX + "/followers/active.json", params, HTTPMETHOD_GET, listener);
@@ -256,7 +256,7 @@ public class FriendshipsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void chainFollowers( long uid, int count, int page, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("uid", uid);
 		params.add("count", count);
 		params.add("page", page);
@@ -272,7 +272,7 @@ public class FriendshipsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void show( long source_id, long target_id, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("source_id", source_id);
 		params.add("target_id", target_id);
 		request( SERVER_URL_PRIX + "/show.json", params, HTTPMETHOD_GET, listener);
@@ -286,7 +286,7 @@ public class FriendshipsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void show( long source_id, String target_screen_name, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("source_id", source_id);
 		params.add("target_screen_name", target_screen_name);
 		request( SERVER_URL_PRIX + "/show.json", params, HTTPMETHOD_GET, listener);
@@ -300,7 +300,7 @@ public class FriendshipsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void show( String source_screen_name, long target_id, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("source_screen_name", source_screen_name);
 		params.add("target_id", target_id);
 		request( SERVER_URL_PRIX + "/show.json", params, HTTPMETHOD_GET, listener);
@@ -315,7 +315,7 @@ public class FriendshipsAPI extends WeiboAPI {
 	 */
 	public void show( String source_screen_name, String target_screen_name,
 			RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("target_screen_name", target_screen_name);
 		params.add("source_screen_name", source_screen_name);
 		request(SERVER_URL_PRIX + "/show.json", params, HTTPMETHOD_GET, listener);
@@ -329,7 +329,7 @@ public class FriendshipsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void create( long uid, String screen_name, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("uid", uid);
 		params.add("screen_name", screen_name);
 		request( SERVER_URL_PRIX + "/create.json", params, HTTPMETHOD_POST, listener);
@@ -343,7 +343,7 @@ public class FriendshipsAPI extends WeiboAPI {
 	 */
 	@Deprecated
 	public void create( String screen_name, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("screen_name", screen_name);
 		request( SERVER_URL_PRIX + "/create.json", params, HTTPMETHOD_POST, listener);
 	}
@@ -356,7 +356,7 @@ public class FriendshipsAPI extends WeiboAPI {
 	 * @param listener
 	 */
 	public void destroy(long uid, String screen_name, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("uid", uid);
 		params.add("screen_name", screen_name);
 		request( SERVER_URL_PRIX + "/destroy.json", params, HTTPMETHOD_POST, listener);
@@ -370,7 +370,7 @@ public class FriendshipsAPI extends WeiboAPI {
 	 */
 	@Deprecated
 	public void destroy(String screen_name, RequestListener listener) {
-		WeiboParameters params = new WeiboParameters();
+		MyParameters params = new MyParameters();
 		params.add("screen_name", screen_name);
 		request( SERVER_URL_PRIX + "/destroy.json", params, HTTPMETHOD_POST, listener);
 	}
