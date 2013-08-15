@@ -81,7 +81,6 @@ public class MainActivity extends Activity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		JSONArray s = new JSONArray();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		mWeibo = Weibo.getInstance(WEIBO_CONSUMER_KEY, WEIBO_REDIRECT_URL);
