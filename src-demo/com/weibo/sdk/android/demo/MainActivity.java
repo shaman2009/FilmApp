@@ -73,6 +73,7 @@ public class MainActivity extends Activity {
 	private static final String DOUBAN_CONSUMER_KEY = "0e32be84b39035752a983b8e1ab0a05f";
 	private static final String DOUBAN_REDIRECT_URL = "http://shaman.logdown.com";
 	
+
 	private Button authBtn, apiBtn, ssoBtn, cancelBtn ,doubanAuthBtn;
 	private TextView mText;
 	private EditText mEditText;
