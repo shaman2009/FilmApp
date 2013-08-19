@@ -51,6 +51,18 @@ import com.weibo.sdk.android.util.Utility;
  * @author feng_xiang
  *
  */
+/**
+ * 
+ * 姓名
+ * 手机方式
+ * 身份证号码 
+ * 身份证地址
+ * 安装地址： 紫薇路198弄20号201
+ * 18616900779
+ * 身份证复印件
+ * @author feng_xiang
+ *
+ */
 public class MainActivity extends Activity {
 
 	private Weibo mWeibo;
