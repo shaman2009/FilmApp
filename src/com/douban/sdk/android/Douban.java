@@ -96,7 +96,7 @@ public class Douban {
 	
 	public void startDialog(Context context, MyParameters parameters,final DoubanAuthListener listener) {
 		parameters.add("client_id", app_key);
-		parameters.add("response_type", "token");
+		parameters.add("response_type", "code");
 		parameters.add("redirect_uri", redirecturl);
 		if (accessToken != null && accessToken.isSessionValid()) {
 			parameters.add(KEY_TOKEN, accessToken.getToken());
