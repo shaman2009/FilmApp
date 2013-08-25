@@ -3,7 +3,9 @@ package com.weibo.sdk.android.demo;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,6 +33,8 @@ import com.douban.sdk.android.Douban;
 import com.douban.sdk.android.DoubanAuthListener;
 import com.douban.sdk.android.DoubanDialogError;
 import com.douban.sdk.android.DoubanException;
+import com.douban.sdk.android.net.DoubanRequestListener;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.weibo.sdk.android.Oauth2AccessToken;
 import com.weibo.sdk.android.Weibo;
 import com.weibo.sdk.android.WeiboAuthListener;
@@ -39,6 +43,7 @@ import com.weibo.sdk.android.WeiboException;
 import com.weibo.sdk.android.api.FriendshipsAPI;
 import com.weibo.sdk.android.api.StatusesAPI;
 import com.weibo.sdk.android.api.WeiboAPI.FEATURE;
+import com.weibo.sdk.android.doubanapi.AuthAPI;
 import com.weibo.sdk.android.doubanapi.MovieAPI;
 import com.weibo.sdk.android.keep.AccessTokenKeeper;
 import com.weibo.sdk.android.net.RequestListener;
@@ -51,18 +56,6 @@ import com.weibo.sdk.android.util.Utility;
  * @author feng_xiang
  *
  */
-/**
- * 
- * 姓名
- * 手机方式
- * 身份证号码 
- * 身份证地址
- * 安装地址： 紫薇路198弄20号201
- * 18616900779
- * 身份证复印件
- * @author feng_xiang
- *
- */
 public class MainActivity extends Activity {
 
 	private Weibo mWeibo;
@@ -70,12 +63,15 @@ public class MainActivity extends Activity {
 	private static final String WEIBO_CONSUMER_KEY = "2867503323";// 替换为开发者的appkey，例如"1646212860";
 	private static final String WEIBO_REDIRECT_URL = "http://jianshu.io/users/SLfZEb";
 	
-	private static final String DOUBAN_CONSUMER_KEY = "0e32be84b39035752a983b8e1ab0a05f";
-	private static final String DOUBAN_REDIRECT_URL = "http://shaman.logdown.com";
 	
+	
+	private static final String DOUBAN_CONSUMER_KEY = "0e32be84b39035752a983b8e1ab0a05f";
+	private static final String DOUBAN_CLIENT_SECRET = "a560769d3d9b0dc7";
+	private static final String DOUBAN_REDIRECT_URL = "http://shaman.logdown.com";
+
 
 	private Button authBtn, apiBtn, ssoBtn, cancelBtn ,doubanAuthBtn;
-	private TextView mText;
+//	private TextView mText;
 	private EditText mEditText;
 	public static Oauth2AccessToken accessToken;
 	public static final String TAG = "sinasdk";
@@ -96,8 +92,19 @@ public class MainActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+	       // configure the SlidingMenu
+        SlidingMenu menu = new SlidingMenu(this);
+        menu.setMode(SlidingMenu.LEFT);
+        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        menu.setShadowWidthRes(R.dimen.shadow_width);
+        menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+        menu.setFadeDegree(0.35f);
+        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+        menu.setMenu(R.layout.slide_menu);
+		
 		mWeibo = Weibo.getInstance(WEIBO_CONSUMER_KEY, WEIBO_REDIRECT_URL);
-		mDouban = Douban.getInstance(DOUBAN_CONSUMER_KEY, DOUBAN_REDIRECT_URL);
+		mDouban = Douban.getInstance(DOUBAN_CONSUMER_KEY, DOUBAN_CLIENT_SECRET, DOUBAN_REDIRECT_URL);
 //		mAutoText = (AutoCompleteTextView)findViewById(R.id .editAuto);  
 //		mAutoText.setAdapter(new ArrayAdapter<String>(this ,android.R.layout.simple_dropdown_item_1line ,items ));  
 		doubanAuthBtn = (Button) findViewById(R.id.doubanAuth);
@@ -140,11 +147,11 @@ public class MainActivity extends Activity {
 				authBtn.setVisibility(View.VISIBLE);
 				ssoBtn.setVisibility(View.VISIBLE);
 				cancelBtn.setVisibility(View.INVISIBLE);
-				mText.setText("");
+//				mText.setText("");
 			}
 		});
 
-		mText = (TextView) findViewById(R.id.show);
+//		mText = (TextView) findViewById(R.id.show);
 		MainActivity.accessToken = AccessTokenKeeper.readAccessToken(this);
 		if (MainActivity.accessToken.isSessionValid()) {
 			Weibo.isWifi = Utility.isWifi(this);
@@ -161,9 +168,9 @@ public class MainActivity extends Activity {
 			ssoBtn.setVisibility(View.INVISIBLE);
 			cancelBtn.setVisibility(View.VISIBLE);
 			String date = new java.text.SimpleDateFormat("yyyy/MM/dd hh:mm:ss").format(new java.util.Date(MainActivity.accessToken.getExpiresTime()));
-			mText.setText("access_token 仍在有效期内,无需再次登录: \naccess_token:" + MainActivity.accessToken.getToken() + "\n有效期：" + date);
+//			mText.setText("access_token 仍在有效期内,无需再次登录: \naccess_token:" + MainActivity.accessToken.getToken() + "\n有效期：" + date);
 		} else {
-			mText.setText("使用SSO登录前，请检查手机上是否已经安装新浪微博客户端，目前仅3.0.0及以上微博客户端版本支持SSO；如果未安装，将自动转为Oauth2.0进行认证");
+//			mText.setText("使用SSO登录前，请检查手机上是否已经安装新浪微博客户端，目前仅3.0.0及以上微博客户端版本支持SSO；如果未安装，将自动转为Oauth2.0进行认证");
 		}
 		try {
 			MainActivity.this.getUserId(null);
@@ -194,13 +201,53 @@ public class MainActivity extends Activity {
 
 		@Override
 		public void onComplete(Bundle values) {
+			
 			Toast.makeText(MainActivity.this, "Auth success", Toast.LENGTH_SHORT).show();
+			
+			List<String> list = new ArrayList<String>();
+			Set<String> set = values.keySet();
+			Iterator<String> it = set.iterator();
+			while(it.hasNext()) {
+				String key = it.next();
+				list.add(key);
+				list.add(values.getString(key));
+			}
+			Log.d("Douban-authorize",list.toString());
+			AuthAPI authAPI = new AuthAPI();
+			authAPI.getToken(DOUBAN_CONSUMER_KEY, DOUBAN_CLIENT_SECRET, DOUBAN_REDIRECT_URL, Douban.AUTHORIZATION_CODE, values.getString(Douban.KEY_CODE), new DoubanRequestListener() {
+				
+				@Override
+				public void onIOException(IOException e) {
+					Toast.makeText(getApplicationContext(),"Auth exception : " + e.getMessage(), Toast.LENGTH_LONG).show();
+				}
+				
+				@Override
+				public void onError(DoubanException e) {
+					Toast.makeText(getApplicationContext(),"Auth error : " + e.getMessage(), Toast.LENGTH_LONG).show();
+				}
+				
+				@Override
+				public void onComplete(String response) {
+					Log.d("Douban-authorize",response);
+					// get token via authorization_code 
+//					{
+//					    "access_token": "4257c1f43410c560c70745dc9c325020",
+//					    "douban_user_name": "shaman",
+//					    "douban_user_id": "55832962",
+//					    "expires_in": 604800,
+//					    "refresh_token": "5d3c793c5a7e080917b56bb50f7a181b"
+//					}	
+					
+					
+					
+				}
+			});
+			
 		}
 
 		@Override
 		public void onDoubanException(DoubanException e) {
 			Toast.makeText(getApplicationContext(),"Auth exception : " + e.getMessage(), Toast.LENGTH_LONG).show();
-			
 		}
 
 		@Override
@@ -212,7 +259,6 @@ public class MainActivity extends Activity {
 		@Override
 		public void onCancel() {
 			Toast.makeText(getApplicationContext(), "Auth cancel",Toast.LENGTH_LONG).show();
-			
 		}
 		
 	}
@@ -225,7 +271,7 @@ public class MainActivity extends Activity {
 			MainActivity.accessToken = new Oauth2AccessToken(token, expires_in);
 			if (MainActivity.accessToken.isSessionValid()) {
 				String date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new java.util.Date(MainActivity.accessToken.getExpiresTime()));
-				mText.setText("认证成功: \r\n access_token: " + token + "\r\n" + "expires_in: " + expires_in + "\r\n有效期：" + date);
+//				mText.setText("认证成功: \r\n access_token: " + token + "\r\n" + "expires_in: " + expires_in + "\r\n有效期：" + date);
 				try {
 					Class sso = Class.forName("com.weibo.sdk.android.api.WeiboAPI");// 如果支持weiboapi的话，显示api功能演示入口按钮
 					if (apiBtn != null) {
@@ -280,7 +326,7 @@ public class MainActivity extends Activity {
 			return;
 		}
 		MovieAPI api = new MovieAPI(); 
-		api.getMovie(str, null, 0, 0, new RequestListener() {
+		api.getMovie(str, null, 0, 0, new DoubanRequestListener() {
 			
 			@Override
 			public void onIOException(IOException e) {
@@ -294,7 +340,7 @@ public class MainActivity extends Activity {
 			}
 			
 			@Override
-			public void onError(WeiboException e) {
+			public void onError(DoubanException e) {
 				Log.i(TAG, e.toString());
 				MainActivity.this.runOnUiThread(new Runnable() {
 					@Override
@@ -350,7 +396,7 @@ public class MainActivity extends Activity {
 	}
 
 	public void getFriendList(View view) throws JSONException {
-		mText = (TextView) findViewById(R.id.myshow);
+//		mText = (TextView) findViewById(R.id.myshow);
 		FriendshipsAPI friendshipsAPI = new FriendshipsAPI(accessToken);
 		SharedPreferences pref = MainActivity.this.getSharedPreferences(USERID, Context.MODE_APPEND);
 		String userId = pref.getString("userId", "");
@@ -408,7 +454,7 @@ public class MainActivity extends Activity {
 					MainActivity.this.runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
-							Toast.makeText(MainActivity.this, "Success!!!",Toast.LENGTH_LONG).show();
+//							Toast.makeText(MainActivity.this, "Success!!!",Toast.LENGTH_LONG).show();
 //							mText.setText("You are following : " + myfriendList);
 						}
 					});

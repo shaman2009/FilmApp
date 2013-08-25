@@ -39,5 +39,8 @@
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
     <string name="title_activity_share_movie">ShareMovieActivity</string>
+    <string name="sliding_button1">sliding_button1</string>
+    <string name="sliding_button2">sliding_button2</string>
+    <string name="sliding_button3">sliding_button3</string>
 
 </resources>

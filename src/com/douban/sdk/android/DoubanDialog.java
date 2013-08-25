@@ -37,6 +37,7 @@ import android.widget.RelativeLayout;
 
 import com.douban.sdk.android.util.Utility;
 import com.weibo.sdk.android.demo.R;
+import com.weibo.sdk.android.doubanapi.AuthAPI;
 public class DoubanDialog extends Dialog {
     
 	static  FrameLayout.LayoutParams FILL = new FrameLayout.LayoutParams(
@@ -60,7 +61,6 @@ public class DoubanDialog extends Dialog {
 		super(context,theme);
 		mUrl = url;
 		mListener = listener;
-		
 	}
 
 	@Override
@@ -113,7 +113,7 @@ public class DoubanDialog extends Dialog {
 		RelativeLayout.LayoutParams lp0 = new RelativeLayout.LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT);
 		
         mContent.setBackgroundColor(Color.TRANSPARENT);
-        AssetManager asseets=DoubanDialog.this.getContext().getAssets();
+        AssetManager asseets = DoubanDialog.this.getContext().getAssets();
         InputStream is=null;
         try {
              try {
@@ -183,8 +183,7 @@ public class DoubanDialog extends Dialog {
 		}
 
 		@Override
-		public void onReceivedError(WebView view, int errorCode, String description,
-				String failingUrl) {
+		public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
 			super.onReceivedError(view, errorCode, description, failingUrl);
 			mListener.onError(new DoubanDialogError(description, errorCode, failingUrl));
 			DoubanDialog.this.dismiss();

@@ -42,13 +42,13 @@
         android:onClick="sendMessage"
         android:text="@string/button_send" />
 
-    <TextView
+    <!-- <TextView
         android:id="@+id/show"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/auth"
-        android:layout_marginTop="18dp" />
+        android:layout_marginTop="18dp" /> -->
 
     <!-- <Button -->
     <!-- android:id="@+id/button_getUserId" -->

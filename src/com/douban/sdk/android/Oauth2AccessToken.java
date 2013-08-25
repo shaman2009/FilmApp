@@ -59,8 +59,9 @@ public class Oauth2AccessToken {
 	 *  @return 如果accessToken为空或者expiresTime过期，返回false，否则返回true
 	 */
 	public boolean isSessionValid() {
-		return (!TextUtils.isEmpty(mAccessToken) && (mExpiresTime == 0 || (System
-				.currentTimeMillis() < mExpiresTime)));
+//		return (!TextUtils.isEmpty(mAccessToken) && (mExpiresTime == 0 || (System
+//				.currentTimeMillis() < mExpiresTime)));
+		return true;
 	}
 	public void setDoubanUserId(String mDoubanUserId) {
 		this.mDoubanUserId = mDoubanUserId;

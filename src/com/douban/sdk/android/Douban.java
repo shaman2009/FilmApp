@@ -18,6 +18,7 @@ import com.douban.sdk.android.util.Utility;
 public class Douban {
 	public static String URL_OAUTH2_ACCESS_AUTHORIZE = "https://www.douban.com/service/auth2/auth";
 	public static String app_key = "";//第三方应用的appkey
+	public static String clinet_secret = "";
 	public static String redirecturl = "";// 重定向url
 	public static boolean isWifi = false;//当前是否为wifi
 	public Oauth2AccessToken accessToken = null;//AccessToken实例
@@ -25,13 +26,16 @@ public class Douban {
 	public static final String KEY_EXPIRES = "expires_in";
 	public static final String KEY_REFRESHTOKEN = "refresh_token";
 	public static final String DOUBAN_USERID = "douban_user_id";
+	public static final String AUTHORIZATION_CODE = "authorization_code";
+	public static final String KEY_CODE= "code";
 	private static Douban mDoubanInstance = null;
 
-	public synchronized static Douban getInstance(String appKey, String redirectUrl) {
+	public synchronized static Douban getInstance(String appKey, String clinetSecret, String redirectUrl) {
 		if (mDoubanInstance == null) {
 			mDoubanInstance = new Douban();
 		}
 		app_key = appKey;
+		clinet_secret = clinetSecret;
 		Douban.redirecturl = redirectUrl;
 		return mDoubanInstance;
 	}
@@ -54,7 +58,7 @@ public class Douban {
 //		CookieSyncManager.createInstance(context);
 		startDialog(context, params, new DoubanAuthListener() {
 			@Override
-			public void onComplete(Bundle values) {
+			public void onComplete(final Bundle values) {
 				// ensure any cookies set by the dialog are saved
 				CookieSyncManager.getInstance().sync();
 				if (null == accessToken) {
@@ -67,6 +71,7 @@ public class Douban {
 					Log.d("Douban-authorize","Login Success! access_token=" + accessToken.getToken() + " expires="
 									+ accessToken.getExpiresTime() + " refresh_token="
 									+ accessToken.getRefreshToken());
+					
 					listener.onComplete(values);
 				} else {
 					Log.d("Douban-authorize", "Failed to receive access token");

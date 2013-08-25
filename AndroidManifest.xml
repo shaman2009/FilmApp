@@ -20,11 +20,11 @@
         <activity
             android:name="com.weibo.sdk.android.demo.MainActivity"
             android:label="@string/title_activity_main" >
-            <intent-filter>
+<!--             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter> -->
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 
@@ -37,7 +37,7 @@
                 <data android:mimeType="video/*" />
             </intent-filter>
 
-            <!--   y!  For these schemes were not particular MIME type has been                 supplied, we are a good candidate. -->
+            <!-- y!  For these schemes were not particular MIME type has been                 supplied, we are a good candidate. -->
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.VIEW" /> -->
 
@@ -143,6 +143,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.weibo.sdk.android.demo.MovieActivity" />
+        </activity>
+        <activity
+            android:name="com.weibo.sdk.android.demo.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
