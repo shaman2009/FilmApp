@@ -26,7 +26,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.douban.sdk.android.Douban;
@@ -124,7 +123,7 @@ public class MainActivity extends Activity {
 		ssoBtn = (Button) findViewById(R.id.sso);// 触发sso的按钮
 		try {
 			Class sso = Class.forName("com.weibo.sdk.android.sso.SsoHandler");
-			ssoBtn.setVisibility(View.VISIBLE);
+//			ssoBtn.setVisibility(View.VISIBLE);
 		} catch (ClassNotFoundException e) {
 			Log.i(TAG, "com.weibo.sdk.android.sso.SsoHandler not found");
 
@@ -144,8 +143,8 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				AccessTokenKeeper.clear(MainActivity.this);
-				authBtn.setVisibility(View.VISIBLE);
-				ssoBtn.setVisibility(View.VISIBLE);
+//				authBtn.setVisibility(View.VISIBLE);
+//				ssoBtn.setVisibility(View.VISIBLE);
 				cancelBtn.setVisibility(View.INVISIBLE);
 //				mText.setText("");
 			}
@@ -158,7 +157,7 @@ public class MainActivity extends Activity {
 			try {
 				Class sso = Class.forName("com.weibo.sdk.android.api.WeiboAPI");// 如果支持weiboapi的话，显示api功能演示入口按钮
 				if (apiBtn != null) {
-					apiBtn.setVisibility(View.VISIBLE);
+//					apiBtn.setVisibility(View.VISIBLE);
 				}
 			} catch (ClassNotFoundException e) {
 				// e.printStackTrace();
@@ -166,7 +165,7 @@ public class MainActivity extends Activity {
 			}
 			authBtn.setVisibility(View.INVISIBLE);
 			ssoBtn.setVisibility(View.INVISIBLE);
-			cancelBtn.setVisibility(View.VISIBLE);
+//			cancelBtn.setVisibility(View.VISIBLE);
 			String date = new java.text.SimpleDateFormat("yyyy/MM/dd hh:mm:ss").format(new java.util.Date(MainActivity.accessToken.getExpiresTime()));
 //			mText.setText("access_token 仍在有效期内,无需再次登录: \naccess_token:" + MainActivity.accessToken.getToken() + "\n有效期：" + date);
 		} else {
@@ -275,12 +274,12 @@ public class MainActivity extends Activity {
 				try {
 					Class sso = Class.forName("com.weibo.sdk.android.api.WeiboAPI");// 如果支持weiboapi的话，显示api功能演示入口按钮
 					if (apiBtn != null) {
-						apiBtn.setVisibility(View.VISIBLE);
+//						apiBtn.setVisibility(View.VISIBLE);
 					}
 				} catch (ClassNotFoundException e) {
 					Log.i(TAG, "com.weibo.sdk.android.api.WeiboAPI not found");
 				}
-				cancelBtn.setVisibility(View.VISIBLE);
+//				cancelBtn.setVisibility(View.VISIBLE);
 				AccessTokenKeeper.keepAccessToken(MainActivity.this,accessToken);
 				Toast.makeText(MainActivity.this, "认证成功", Toast.LENGTH_SHORT).show();
 			}

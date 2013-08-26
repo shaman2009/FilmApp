@@ -29,7 +29,7 @@
     <string name="edit_auto_complete_message">type here to @ your friend</string>
     <string name="button_add_at">add</string>
     <string name="edit_movie_name">type movie name</string>
-    <string name="button_getMovie">getMovie</string>
+    <string name="button_getMovie">Movie</string>
     <string name="title_activity_film_show">Film</string>
     <string name="dummy_button">Post</string>
     <string name="dummy_content">Movie\nDating</string>
@@ -39,8 +39,9 @@
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
     <string name="title_activity_share_movie">ShareMovieActivity</string>
-    <string name="sliding_button1">sliding_button1</string>
-    <string name="sliding_button2">sliding_button2</string>
-    <string name="sliding_button3">sliding_button3</string>
+    <string name="sliding_button1">home</string>
+    <string name="sliding_button2">setting</string>
+    <string name="sliding_button3">feedback</string>
+    <string name="sliding_button_quit">quit</string>
 
 </resources>
