@@ -11,15 +11,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Looper;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -28,6 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.actionbarsherlock.view.MenuItem;
 import com.douban.sdk.android.Douban;
 import com.douban.sdk.android.DoubanAuthListener;
 import com.douban.sdk.android.DoubanDialogError;
@@ -55,7 +57,9 @@ import com.weibo.sdk.android.util.Utility;
  * @author feng_xiang
  *
  */
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
+
+	
 
 	private Weibo mWeibo;
 	private Douban mDouban;
@@ -80,27 +84,60 @@ public class MainActivity extends Activity {
 	public final static String MOVIE_MESSAGE = "douban.movie.json";
 	
 	private AutoCompleteTextView mAutoText;  
-	private String[] items = {"LovinEscaper","lorem", "ipsum", "dolor", "sit", "amet", "consectetuer", "adipiscing", "elit", "morbi", "vel", "ligula", "vitae", "arcu", "aliquet", "mollis", "etiam", "vel", "erat", "placerat", "ante", "porttitor", "sodales", "pellentesque", "augue", "purus"};   
+	private String[] items = {"LovinEscaper","lorem", "ipsum", "dolor", "sit", "amet", 
+			"consectetuer", "adipiscing", "elit", "morbi", "vel", "ligula", "vitae", "arcu", "aliquet", "mollis", 
+			"etiam", "vel", "erat", "placerat", "ante", "porttitor", "sodales", "pellentesque", "augue", "purus"};   
 	
 	/**
 	 * SsoHandler 仅当sdk支持sso时有效，
 	 */
 	SsoHandler mSsoHandler;
+	
+	protected ListFragment mFrag;
+	private Fragment mContent;
+	
+	
+	public MainActivity() {
+		super(R.string.changing_fragments);
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		// set the Behind View
+		setBehindContentView(R.layout.menu_frame);
+		if (savedInstanceState == null) {
+			FragmentTransaction t = this.getSupportFragmentManager().beginTransaction();
+			mFrag = new SampleListFragment();
+			t.replace(R.id.menu_frame, mFrag);
+			t.commit();
+		} else {
+			mFrag = (ListFragment)this.getSupportFragmentManager().findFragmentById(R.id.menu_frame);
+		}
+		// set the Above View
+		if (savedInstanceState != null){
+			mContent = getSupportFragmentManager().getFragment(savedInstanceState, "mContent");
+		}
+		if (mContent == null)
+			mContent = new ColorFragment(R.color.red);	
 		
-	       // configure the SlidingMenu
-        SlidingMenu menu = new SlidingMenu(this);
-        menu.setMode(SlidingMenu.LEFT);
-        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-        menu.setShadowWidthRes(R.dimen.shadow_width);
-        menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-        menu.setFadeDegree(0.35f);
-        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-        menu.setMenu(R.layout.slide_menu);
+		// set the Above View
+		setContentView(R.layout.activity_main);
+		getSupportFragmentManager()
+		.beginTransaction()
+		.replace(R.id.content_frame, mContent)
+		.commit();
+		
+		// set the Behind View
+		setBehindContentView(R.layout.menu_frame);
+		getSupportFragmentManager()
+		.beginTransaction()
+		.replace(R.id.menu_frame, new ColorMenuFragment())
+		.commit();
+		
+		// customize the SlidingMenu
+		getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		mWeibo = Weibo.getInstance(WEIBO_CONSUMER_KEY, WEIBO_REDIRECT_URL);
 		mDouban = Douban.getInstance(DOUBAN_CONSUMER_KEY, DOUBAN_CLIENT_SECRET, DOUBAN_REDIRECT_URL);
@@ -191,11 +228,11 @@ public class MainActivity extends Activity {
 		editText.setText(String.valueOf(b.get("android.intent.extra.TEXT")));
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_main, menu);
-		return true;
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		getMenuInflater().inflate(R.menu.activity_main, menu);
+//		return true;
+//	}
 	class DoubanAuthDialogListener implements DoubanAuthListener {
 
 		@Override
@@ -213,7 +250,8 @@ public class MainActivity extends Activity {
 			}
 			Log.d("Douban-authorize",list.toString());
 			AuthAPI authAPI = new AuthAPI();
-			authAPI.getToken(DOUBAN_CONSUMER_KEY, DOUBAN_CLIENT_SECRET, DOUBAN_REDIRECT_URL, Douban.AUTHORIZATION_CODE, values.getString(Douban.KEY_CODE), new DoubanRequestListener() {
+			authAPI.getToken(DOUBAN_CONSUMER_KEY, DOUBAN_CLIENT_SECRET, DOUBAN_REDIRECT_URL, Douban.AUTHORIZATION_CODE, values.getString(Douban.KEY_CODE),
+					new DoubanRequestListener() {
 				
 				@Override
 				public void onIOException(IOException e) {
@@ -300,7 +338,29 @@ public class MainActivity extends Activity {
 			Toast.makeText(getApplicationContext(),"Auth exception : " + e.getMessage(), Toast.LENGTH_LONG).show();
 		}
 	}
-
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			toggle();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		getSupportFragmentManager().putFragment(outState, "mContent", mContent);
+	}
+	
+	public void switchContent(Fragment fragment) {
+		mContent = fragment;
+		getSupportFragmentManager()
+		.beginTransaction()
+		.replace(R.id.content_frame, fragment)
+		.commit();
+		getSlidingMenu().showContent();
+	}
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -312,6 +372,7 @@ public class MainActivity extends Activity {
 			mSsoHandler.authorizeCallBack(requestCode, resultCode, data);
 		}
 	}
+
 	public void getDoubanMovie(View view) {
 		mEditText = (EditText) findViewById(R.id.edit_movie_name);
 		String str = mEditText.getEditableText().toString();

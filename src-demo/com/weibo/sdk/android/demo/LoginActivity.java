@@ -272,7 +272,7 @@ public class LoginActivity extends Activity {
 	
 	public void login() {
 		Log.d(SINA_SDK_TAG, "login...");
-		Intent intent = new Intent(this, MainActivity.class);
+		Intent intent = new Intent(this, SlidingmenuActivity.class);
 	    startActivity(intent);
 	}
 
