@@ -23,5 +23,9 @@
     <color name="weibosdk_text_num_gray">#333</color>
     <color name="weibosdk_dialog_title_blue">#9CCCF7</color>
     <color name="black_overlay">#66000000</color>
-
+	<color name="red">#900</color>
+    <color name="green">#090</color>
+    <color name="blue">#009</color>
+    <color name="white">#FFF</color>
+    <color name="black">#000</color>
 </resources>
