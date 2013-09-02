@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.weibo.sdk.android.demo.Fragment.ColorFragment;
+
 public class ColorMenuFragment extends ListFragment {
 
 	@Override
@@ -30,7 +32,7 @@ public class ColorMenuFragment extends ListFragment {
 		Fragment newContent = null;
 		switch (position) {
 		case 0:
-			newContent = new ColorFragment(R.color.red);
+			newContent = new ColorFragment(android.R.color.black);
 			break;
 		case 1:
 			newContent = new ColorFragment(R.color.green);
@@ -42,7 +44,7 @@ public class ColorMenuFragment extends ListFragment {
 			newContent = new ColorFragment(android.R.color.white);
 			break;
 		case 4:
-			newContent = new ColorFragment(android.R.color.black);
+			newContent = new ColorFragment(R.color.red);
 			break;
 		}
 		if (newContent != null)
@@ -54,8 +56,8 @@ public class ColorMenuFragment extends ListFragment {
 		if (getActivity() == null)
 			return;
 		
-		if (getActivity() instanceof FragmentChangeActivity) {
-			FragmentChangeActivity fca = (FragmentChangeActivity) getActivity();
+		if (getActivity() instanceof SlidingmenuActivity) {
+			SlidingmenuActivity fca = (SlidingmenuActivity) getActivity();
 			fca.switchContent(fragment);
 		} 
 	}

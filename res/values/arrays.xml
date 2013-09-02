@@ -2,11 +2,11 @@
 <resources>
 	
     <string-array name="color_names">
-        <item>Red</item>
-        <item>Green</item>
-        <item>Blue</item>
-        <item>White</item>
-        <item>Black</item>
+        <item>News Feed</item>
+        <item>Movies</item>
+        <item>Events</item>
+        <item>Find Friends</item>
+        <item>Account Settings</item>
     </string-array>
     
     <string-array name="api_types">
