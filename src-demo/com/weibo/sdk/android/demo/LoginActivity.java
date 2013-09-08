@@ -10,7 +10,10 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -51,7 +54,7 @@ public class LoginActivity extends Activity {
 	 * TODO: remove after connecting to a real authentication system.
 	 */
 	private static final String[] DUMMY_CREDENTIALS = new String[] {
-			"foo@example.com:hello", "bar@example.com:world" };
+			"ff@ff.com:0330", "bar@ff.com:world" };
 
 	/**
 	 * The default email to populate the email field with.
@@ -84,9 +87,11 @@ public class LoginActivity extends Activity {
 	private static final String DOUBAN_CLIENT_SECRET = "a560769d3d9b0dc7";
 	private static final String DOUBAN_REDIRECT_URL = "http://shaman.logdown.com";
 	private Button authBtn, apiBtn, ssoWeiboBtn, cancelBtn ,doubanAuthBtn;
-	SsoHandler mSsoHandler;
+	private SsoHandler mSsoHandler;
 	public static Oauth2AccessToken accessToken;
 	public static final String SINA_SDK_TAG = "sinasdk";
+	
+	public static final String LOGIN_SESSION = "loginSession";
 
 
 
@@ -94,7 +99,10 @@ public class LoginActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		if(readloginsession()) {
+			loginTask();
+		}
+		
 		setContentView(R.layout.activity_login);
 		
 		mWeibo = Weibo.getInstance(WEIBO_CONSUMER_KEY, WEIBO_REDIRECT_URL);
@@ -129,8 +137,7 @@ public class LoginActivity extends Activity {
 		mPasswordView = (EditText) findViewById(R.id.password);
 		mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 					@Override
-					public boolean onEditorAction(TextView textView, int id,
-							KeyEvent keyEvent) {
+					public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
 						if (id == R.id.login || id == EditorInfo.IME_NULL) {
 							attemptLogin();
 							return true;
@@ -183,15 +190,7 @@ public class LoginActivity extends Activity {
 				@Override
 				public void onComplete(String response) {
 					Log.d("Douban-authorize",response);
-					new Thread(new Runnable() {
-						@Override
-						public void run() {
-							Looper.prepare();
-							Log.d(SINA_SDK_TAG, "call login...");
-							LoginActivity.this.login();
-							Looper.loop();
-						}
-					}).start();
+					loginTask();
 					// get token via authorization_code 
 //					{
 //					    "access_token": "4257c1f43410c560c70745dc9c325020",
@@ -231,15 +230,16 @@ public class LoginActivity extends Activity {
 				}
 				AccessTokenKeeper.keepAccessToken(LoginActivity.this,accessToken);
 				Toast.makeText(LoginActivity.this, "login success", Toast.LENGTH_SHORT).show();
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						Looper.prepare();
-						Log.d(SINA_SDK_TAG, "call login...");
-						LoginActivity.this.login();
-						Looper.loop();
-					}
-				}).start();
+//				new Thread(new Runnable() {
+//					@Override
+//					public void run() {
+//						Looper.prepare();
+//						Log.d(SINA_SDK_TAG, "call login...");
+//						LoginActivity.this.login();
+//						Looper.loop();
+//					}
+//				}).start();
+				loginTask();
 			}
 		}
 
@@ -268,12 +268,26 @@ public class LoginActivity extends Activity {
 		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
 	}
-	
+	public void loginTask() {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				Looper.prepare();
+				LoginActivity.this.login();
+				finish();
+				Log.d(SINA_SDK_TAG, "loginTask finish...");
+				Looper.loop();
+			}
+		}).start();
+	}
 	
 	public void login() {
-		Log.d(SINA_SDK_TAG, "login...");
+		saveloginsession();
 		Intent intent = new Intent(this, SlidingmenuActivity.class);
 	    startActivity(intent);
+	    finish();
+		Log.d(SINA_SDK_TAG, "login finish...");
+
 	}
 
 	/**
@@ -394,7 +408,18 @@ public class LoginActivity extends Activity {
 				String[] pieces = credential.split(":");
 				if (pieces[0].equals(mEmail)) {
 					// Account exists, return true if the password matches.
-					return pieces[1].equals(mPassword);
+					if( pieces[1].equals(mPassword)) {
+						new Thread(new Runnable() {
+							@Override
+							public void run() {
+								Looper.prepare();
+								Log.d(SINA_SDK_TAG, "call login...");
+								LoginActivity.this.login();
+								Looper.loop();
+							}
+						}).start();
+					}
+					
 				}
 			}
 
@@ -410,8 +435,7 @@ public class LoginActivity extends Activity {
 			if (success) {
 				finish();
 			} else {
-				mPasswordView
-						.setError(getString(R.string.error_incorrect_password));
+				mPasswordView.setError(getString(R.string.error_incorrect_password));
 				mPasswordView.requestFocus();
 			}
 		}
@@ -421,5 +445,17 @@ public class LoginActivity extends Activity {
 			mAuthTask = null;
 			showProgress(false);
 		}
+	}
+	
+	
+	public void saveloginsession() {
+		SharedPreferences pref = LoginActivity.this.getSharedPreferences(LOGIN_SESSION, Context.MODE_APPEND);
+		Editor editor = pref.edit();
+		editor.putBoolean(LOGIN_SESSION, true);
+		editor.commit();
+	}
+	public boolean readloginsession() {
+		SharedPreferences p = LoginActivity.this.getSharedPreferences(LOGIN_SESSION, Context.MODE_APPEND);
+		return p.getBoolean(LOGIN_SESSION, false);
 	}
 }

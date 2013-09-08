@@ -59,9 +59,6 @@ import com.weibo.sdk.android.util.Utility;
  *
  */
 public class MainActivity extends BaseActivity {
-
-	
-
 	private Weibo mWeibo;
 	private Douban mDouban;
 	private static final String WEIBO_CONSUMER_KEY = "2867503323";// 替换为开发者的appkey，例如"1646212860";
