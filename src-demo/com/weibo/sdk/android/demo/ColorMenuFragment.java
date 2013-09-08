@@ -1,5 +1,6 @@
 package com.weibo.sdk.android.demo;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
@@ -10,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.weibo.sdk.android.demo.Fragment.ColorFragment;
+import com.weibo.sdk.android.demo.Fragment.MovieFragment;
+import com.weibo.sdk.android.demo.Fragment.PostFragment;
 
 public class ColorMenuFragment extends ListFragment {
 
@@ -32,10 +35,10 @@ public class ColorMenuFragment extends ListFragment {
 		Fragment newContent = null;
 		switch (position) {
 		case 0:
-			newContent = new ColorFragment(android.R.color.black);
+			newContent = new PostFragment();
 			break;
 		case 1:
-			newContent = new ColorFragment(R.color.green);
+			newContent = new MovieFragment();
 			break;
 		case 2:
 			newContent = new ColorFragment(R.color.blue);
@@ -45,6 +48,9 @@ public class ColorMenuFragment extends ListFragment {
 			break;
 		case 4:
 			newContent = new ColorFragment(R.color.red);
+			break;
+		case 5:
+			new AlertDialog.Builder(getActivity()).setTitle("注销").setMessage("你是否确定要登出").setNegativeButton("取消", null).setNeutralButton("确定", null).show();
 			break;
 		}
 		if (newContent != null)

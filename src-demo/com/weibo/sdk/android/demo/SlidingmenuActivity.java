@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.weibo.sdk.android.demo.Fragment.ColorFragment;
+import com.weibo.sdk.android.demo.Fragment.PostFragment;
 
 public class SlidingmenuActivity extends BaseActivity {
 	private Fragment mContent;
@@ -18,10 +18,12 @@ public class SlidingmenuActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// set the Above View
-		if (savedInstanceState != null)
+		if (savedInstanceState != null) {
 			mContent = getSupportFragmentManager().getFragment(savedInstanceState, "mContent");
-		if (mContent == null)
-			mContent = new ColorFragment(R.color.black);	
+		}
+		if (mContent == null) {
+			mContent = new PostFragment();	
+		}
 		setContentView(R.layout.content_frame);
 		getSupportFragmentManager()
 		.beginTransaction()

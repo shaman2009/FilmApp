@@ -4,5 +4,28 @@
         android:id="@+id/action_forgot_password"
         android:showAsAction="never"
         android:title="@string/action_forgot_password"/>
+    
+    <item
+        android:id="@+id/action2"
+        android:orderInCategory="2"
+        android:showAsAction="ifRoom|withText"
+        android:text="save"
+        />
 
+    <item
+        android:id="@+id/action3"
+        android:orderInCategory="3"
+        android:showAsAction="ifRoom|withText"
+        android:text="delete"
+        />
+    
+    <item
+        android:id="@+id/action4"
+        android:orderInCategory="4"
+        android:showAsAction="ifRoom|withText"
+        android:text="update"
+        />
+    
+    
+    
 </menu>
