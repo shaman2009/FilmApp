@@ -454,6 +454,12 @@ public class LoginActivity extends Activity {
 		editor.putBoolean(LOGIN_SESSION, true);
 		editor.commit();
 	}
+	public static void deleteloginsession(Context context) {
+		SharedPreferences pref = context.getSharedPreferences(LOGIN_SESSION, Context.MODE_APPEND);
+		Editor editor = pref.edit();
+		editor.putBoolean(LOGIN_SESSION, false);
+		editor.commit();
+	}
 	public boolean readloginsession() {
 		SharedPreferences p = LoginActivity.this.getSharedPreferences(LOGIN_SESSION, Context.MODE_APPEND);
 		return p.getBoolean(LOGIN_SESSION, false);

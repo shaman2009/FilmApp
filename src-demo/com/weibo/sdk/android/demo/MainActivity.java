@@ -45,6 +45,8 @@ import com.weibo.sdk.android.api.FriendshipsAPI;
 import com.weibo.sdk.android.api.StatusesAPI;
 import com.weibo.sdk.android.api.WeiboAPI.FEATURE;
 import com.weibo.sdk.android.demo.Fragment.ColorFragment;
+import com.weibo.sdk.android.demo.Fragment.ColorMenuFragment;
+import com.weibo.sdk.android.demo.Fragment.SampleListFragment;
 import com.weibo.sdk.android.doubanapi.AuthAPI;
 import com.weibo.sdk.android.doubanapi.MovieAPI;
 import com.weibo.sdk.android.keep.AccessTokenKeeper;

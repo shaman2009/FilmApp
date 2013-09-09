@@ -26,7 +26,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>
             -->
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
@@ -180,6 +180,14 @@
         <activity
             android:name="com.weibo.sdk.android.demo.SettingsActivity"
             android:label="@string/title_activity_settings"
+            android:parentActivityName="com.weibo.sdk.android.demo.SlidingmenuActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.weibo.sdk.android.demo.SlidingmenuActivity" />
+        </activity>
+        <activity
+            android:name="com.weibo.sdk.android.demo.FriendListActivity"
+            android:label="@string/title_activity_friend_list"
             android:parentActivityName="com.weibo.sdk.android.demo.SlidingmenuActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

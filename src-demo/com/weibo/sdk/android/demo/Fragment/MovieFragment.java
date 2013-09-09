@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,33 +24,47 @@ import com.weibo.sdk.android.demo.R;
 
 public class MovieFragment extends Fragment {
 	
-	ArrayList<Data> mDatas = new ArrayList<Data>();
-	BaseAdapter mAdapter ;
+	private ArrayList<Data> mDatas = new ArrayList<Data>();
+	private BaseAdapter mAdapter ;
+	private int mHeight;
+	private int mWidth;
+	
 	public void initData(){
 		mDatas.clear();
 		Data d = new Data();
-		d.mName = "a"; 
+		d.mName = "aaa"; 
 		mDatas.add(d);
 		
 		d = new Data();
-		d.mName = "b"; 
+		d.mName = "bbbb"; 
 		mDatas.add(d);
 		
 		d = new Data();
-		d.mName = "c"; 
+		d.mName = "cc"; 
 		mDatas.add(d);
 		
 		d = new Data();
-		d.mName = "d"; 
+		d.mName = "ddddd"; 
 		mDatas.add(d);
 		
 		d = new Data();
-		d.mName = "f"; 
+		d.mName = "ee"; 
 		mDatas.add(d);
 		
 		d = new Data();
+		d.mName = "雷布斯"; 
+		mDatas.add(d);
 		
-		if(mAdapter!=null){
+		d = new Data();
+		d.mName = "gg"; 
+		mDatas.add(d);
+		
+		d = new Data();
+		d.mName = "hh"; 
+		mDatas.add(d);
+		
+		
+		if(mAdapter!= null) {
 			mAdapter.notifyDataSetChanged();
 		}
 		
@@ -58,16 +73,13 @@ public class MovieFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if (savedInstanceState != null) {
-			mDatas = (ArrayList<Data>) savedInstanceState.getSerializable("listViewData");
-			
-			
+//			mDatas = (ArrayList<Data>) savedInstanceState.getSerializable("listViewData");
 		}
-//			mColorRes = savedInstanceState.getInt("mColorRes");
-//		int color = getResources().getColor(R.color.red);
-//		// construct the RelativeLayout
-//		RelativeLayout v = new RelativeLayout(getActivity());
-//		v.setBackgroundColor(color);		
-//		return v;
+		
+		DisplayMetrics  dm = new DisplayMetrics();    
+		getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);    
+	    mWidth = dm.widthPixels;              
+		mHeight = dm.heightPixels;  
 		
 		FrameLayout mFrame = new FrameLayout(getActivity());
 		initData();
@@ -103,13 +115,11 @@ public class MovieFragment extends Fragment {
 				}else{
 					mHolder = (ViewHolder)convertView.getTag();
 				}
-				
 				Data d = (Data)getItem(position);
-				if(d==null)return convertView ;
+				if(d == null) {
+					return convertView ;
+				}
 				mHolder.mText.setText(d.mName);
-				
-				
-				
 				mHolder.mCheck.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 					
 					@Override
@@ -170,8 +180,7 @@ public class MovieFragment extends Fragment {
 		public void addCheck(){
 			mCheck = new CheckBox(getActivity());
 			LayoutParams lp = new LayoutParams(100,100);
-			lp.gravity = Gravity.LEFT | Gravity.TOP ;
-			lp.leftMargin = 620 ;
+			lp.gravity = Gravity.RIGHT | Gravity.TOP;
 			mCheck.setTag(CHECK_TAG);
 			addView(mCheck,lp);
 		}
@@ -180,9 +189,9 @@ public class MovieFragment extends Fragment {
 			mContent = new TextView(getContext());
 			mContent.setTag(TEXT_TAG);
 			mContent.setGravity(Gravity.CENTER);
-			mContent.setTextSize(40);
+			mContent.setTextSize(20);
 			mContent.setText("hello");
-			LayoutParams lp = new LayoutParams(500,100);
+			LayoutParams lp = new LayoutParams(mWidth - 100,100);
 			lp.gravity = Gravity.LEFT | Gravity.TOP ;
 			lp.leftMargin = 110 ;
 			addView(mContent,lp);
@@ -193,7 +202,6 @@ public class MovieFragment extends Fragment {
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-//		outState.putInt("mColorRes", mColorRes);
 		outState.putSerializable("listViewData", mDatas);
 	}
 }

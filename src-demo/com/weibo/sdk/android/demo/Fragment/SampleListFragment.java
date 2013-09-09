@@ -1,4 +1,8 @@
-package com.weibo.sdk.android.demo;
+package com.weibo.sdk.android.demo.Fragment;
+
+import com.weibo.sdk.android.demo.R;
+import com.weibo.sdk.android.demo.R.id;
+import com.weibo.sdk.android.demo.R.layout;
 
 import android.content.Context;
 import android.os.Bundle;

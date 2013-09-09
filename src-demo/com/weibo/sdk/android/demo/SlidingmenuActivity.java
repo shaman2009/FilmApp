@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.weibo.sdk.android.demo.Fragment.ColorMenuFragment;
 import com.weibo.sdk.android.demo.Fragment.PostFragment;
 
 public class SlidingmenuActivity extends BaseActivity {

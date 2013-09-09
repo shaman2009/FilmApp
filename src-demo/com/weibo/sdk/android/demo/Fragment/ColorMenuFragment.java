@@ -1,6 +1,9 @@
-package com.weibo.sdk.android.demo;
+package com.weibo.sdk.android.demo.Fragment;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
@@ -10,9 +13,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.weibo.sdk.android.demo.Fragment.ColorFragment;
-import com.weibo.sdk.android.demo.Fragment.MovieFragment;
-import com.weibo.sdk.android.demo.Fragment.PostFragment;
+import com.weibo.sdk.android.demo.LoginActivity;
+import com.weibo.sdk.android.demo.R;
+import com.weibo.sdk.android.demo.SettingsActivity;
+import com.weibo.sdk.android.demo.SlidingmenuActivity;
+import com.weibo.sdk.android.demo.R.array;
+import com.weibo.sdk.android.demo.R.color;
+import com.weibo.sdk.android.demo.R.layout;
 
 public class ColorMenuFragment extends ListFragment {
 
@@ -47,10 +54,26 @@ public class ColorMenuFragment extends ListFragment {
 			newContent = new ColorFragment(android.R.color.white);
 			break;
 		case 4:
-			newContent = new ColorFragment(R.color.red);
+			Intent intent = new Intent(getActivity(), SettingsActivity.class);
+		    startActivity(intent);
 			break;
 		case 5:
-			new AlertDialog.Builder(getActivity()).setTitle("注销").setMessage("你是否确定要登出").setNegativeButton("取消", null).setNeutralButton("确定", null).show();
+			new AlertDialog.Builder(getActivity())
+				.setTitle("注销")
+				.setMessage("你是否确定要登出")
+				.setNegativeButton("取消", null)
+				.setNeutralButton("确定", new OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					
+					LoginActivity loginActivity = new LoginActivity();
+					loginActivity.deleteloginsession(getActivity());
+					Intent intent = new Intent(getActivity(), LoginActivity.class);
+				    startActivity(intent);
+				    getActivity().finish();
+				}
+			}).show();
+			
 			break;
 		}
 		if (newContent != null)

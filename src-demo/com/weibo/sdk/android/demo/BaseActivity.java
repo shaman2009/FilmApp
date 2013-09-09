@@ -7,6 +7,7 @@ import android.support.v4.app.ListFragment;
 import com.actionbarsherlock.view.MenuItem;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
+import com.weibo.sdk.android.demo.Fragment.SampleListFragment;
 
 public class BaseActivity extends SlidingFragmentActivity {
 

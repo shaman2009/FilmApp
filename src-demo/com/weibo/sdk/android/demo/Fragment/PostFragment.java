@@ -5,13 +5,19 @@
  */
 package com.weibo.sdk.android.demo.Fragment;
 
+import com.weibo.sdk.android.demo.FriendListActivity;
+import com.weibo.sdk.android.demo.MainActivity;
+import com.weibo.sdk.android.demo.MovieActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
-import android.test.suitebuilder.annotation.LargeTest;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +34,9 @@ public class PostFragment extends Fragment{
 	
 	private int mHeight;
 	private int mWidth;
+	
+	public static final int INPUTEDITTEXTID = 999999;
+	public static final int BUTTONSGROUP = 999998;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,7 +55,7 @@ public class PostFragment extends Fragment{
 		
 		// construct the RelativeLayout
 		RelativeLayout v = new RelativeLayout(getActivity());
-		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(mWidth,mHeight *4/5);
+		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(mWidth,mHeight *2/5);
 		
 		
 		
@@ -57,64 +66,95 @@ public class PostFragment extends Fragment{
 		editText.setFocusableInTouchMode(true);   
 		editText.requestFocus();  
 		editText.setLayoutParams(lp);
-		editText.setId(999999);
+		editText.setId(INPUTEDITTEXTID);
 		editText.setGravity(Gravity.LEFT | Gravity.TOP);
 		
 		//Group buttons
 		FrameLayout frameLayout = new FrameLayout(getActivity());
+		frameLayout.setId(BUTTONSGROUP);
 		Button button_at,button_emoji,button_pic,button_tag,button_location;
 		button_at = new Button(getActivity());
 		button_emoji = new Button(getActivity());
 		button_pic = new Button(getActivity());
 		button_tag = new Button(getActivity());
 		button_location = new Button(getActivity());
+		Button button_post = new Button(getActivity());
 		
+		button_post.setText("POST");
 		button_at.setText("@");
 		button_emoji.setText("E");
 		button_pic.setText("P");
 		button_tag.setText("#");
 		button_location.setText("L");
 		
+		button_at.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						Looper.prepare();
+						getFriendListActivity("");
+						Looper.loop();
+					}
+				}).start();
+			}
+		});
 		
-		FrameLayout.LayoutParams layoutParamsat = new FrameLayout.LayoutParams(100,50);
+		
+		int button_width = 100;
+		int button_height = 63;
+		
+		FrameLayout.LayoutParams layoutParamspost = new FrameLayout.LayoutParams(220,button_height);
+		layoutParamspost.gravity = Gravity.RIGHT | Gravity.TOP;
+		FrameLayout.LayoutParams layoutParamsat = new FrameLayout.LayoutParams(button_width,button_height);
 		layoutParamsat.gravity = Gravity.RIGHT | Gravity.TOP;
-		FrameLayout.LayoutParams layoutParamsemoji = new FrameLayout.LayoutParams(100,50);
+		layoutParamsat.rightMargin = 230;
+		FrameLayout.LayoutParams layoutParamstag = new FrameLayout.LayoutParams(button_width,button_height);
+		layoutParamstag.gravity = Gravity.RIGHT | Gravity.TOP;
+		layoutParamstag.rightMargin = 350;
+		FrameLayout.LayoutParams layoutParamsemoji = new FrameLayout.LayoutParams(button_width,button_height);
 		layoutParamsemoji.gravity = Gravity.RIGHT | Gravity.TOP;
-		layoutParamsemoji.rightMargin = 120;
-		FrameLayout.LayoutParams layoutParamspic = new FrameLayout.LayoutParams(100,50);
+		layoutParamsemoji.rightMargin = 350;
+		FrameLayout.LayoutParams layoutParamspic = new FrameLayout.LayoutParams(button_width,button_height);
 		layoutParamspic.gravity = Gravity.RIGHT | Gravity.TOP;
 		layoutParamspic.rightMargin =240;
-		FrameLayout.LayoutParams layoutParamstag = new FrameLayout.LayoutParams(100,50);
-		layoutParamstag.gravity = Gravity.RIGHT | Gravity.TOP;
-		layoutParamstag.rightMargin = 360;
-		FrameLayout.LayoutParams layoutParamslocation = new FrameLayout.LayoutParams(100,50);
+		FrameLayout.LayoutParams layoutParamslocation = new FrameLayout.LayoutParams(button_width,button_height);
 		layoutParamslocation.gravity = Gravity.RIGHT | Gravity.TOP;
 		layoutParamslocation.rightMargin = 480;
 		
+		button_post.setLayoutParams(layoutParamspost);
 		button_at.setLayoutParams(layoutParamsat);
 		button_emoji.setLayoutParams(layoutParamsemoji);
 		button_pic.setLayoutParams(layoutParamspic);
 		button_tag.setLayoutParams(layoutParamstag);
 		button_location.setLayoutParams(layoutParamslocation);
 		
+		frameLayout.addView(button_post);
 		frameLayout.addView(button_at);
-		frameLayout.addView(button_emoji);
-		frameLayout.addView(button_pic);
 		frameLayout.addView(button_tag);
-		frameLayout.addView(button_location);
+//		frameLayout.addView(button_emoji);
+//		frameLayout.addView(button_pic);
+//		frameLayout.addView(button_location);
+		
+		FrameLayout postButtonFrameLayout = new FrameLayout(getActivity());
+		
+
+		
+		
 		
 		
 		
 		RelativeLayout.LayoutParams frameLayoutParams = new RelativeLayout.LayoutParams(mWidth,60);
-		frameLayoutParams.addRule(RelativeLayout.ALIGN_BOTTOM, 999999);
+		frameLayoutParams.addRule(RelativeLayout.ALIGN_BOTTOM, INPUTEDITTEXTID);
 		frameLayout.setLayoutParams(frameLayoutParams);
+		
+		
 		
 		v.addView(editText);
 		v.addView(frameLayout);
-		
-		
-		
-		
+		v.addView(postButtonFrameLayout);
 		
 		return v;
 	}
@@ -125,4 +165,11 @@ public class PostFragment extends Fragment{
 		//todo
 	}
 	
+	
+	
+	public void getFriendListActivity(String s) {
+		Intent intent = new Intent(getActivity(), FriendListActivity.class);
+//	    intent.putExtra(MOVIE_MESSAGE, s);
+	    startActivity(intent);
+	}
 }
