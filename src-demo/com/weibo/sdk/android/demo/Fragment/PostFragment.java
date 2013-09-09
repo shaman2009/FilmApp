@@ -5,15 +5,25 @@
  */
 package com.weibo.sdk.android.demo.Fragment;
 
-import com.weibo.sdk.android.demo.FriendListActivity;
-import com.weibo.sdk.android.demo.MainActivity;
-import com.weibo.sdk.android.demo.MovieActivity;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +33,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+import com.weibo.sdk.android.WeiboException;
+import com.weibo.sdk.android.demo.FriendListActivity;
+import com.weibo.sdk.android.demo.SocialNetworkRequest.SocialNetworkRequest;
+import com.weibo.sdk.android.demo.SocialNetworkRequest.WeiboUserInfoPO;
+import com.weibo.sdk.android.net.RequestListener;
+import com.weibo.sdk.android.util.FileManager;
+import com.weibo.sdk.android.util.GetImage;
 
 /**
  * 4:09:12 PM
@@ -37,6 +56,12 @@ public class PostFragment extends Fragment{
 	
 	public static final int INPUTEDITTEXTID = 999999;
 	public static final int BUTTONSGROUP = 999998;
+	public static final String TAG = "sinasdk";
+	public static final String USERID = "userId";
+	public static final String FRIENDLIST = "friendList";
+	public static List<WeiboUserInfoPO> list;
+
+
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,9 +69,149 @@ public class PostFragment extends Fragment{
 			
 			
 		}
+		final AsyncTask<String, Void, String> asyncTask = new AsyncTask<String, Void, String>() {
+			@Override
+			protected String doInBackground(String... params) {
+				list = new ArrayList<WeiboUserInfoPO>();
+				JSONObject json;
+				try {
+					json = new JSONObject(params[0]);
+					JSONArray array = json.getJSONArray("users");
+					for (int i = 0; i < array.length(); i++) {
+						JSONObject jsonWeiboUser = array.getJSONObject(i);
+						WeiboUserInfoPO weiboUserInfoPO = new WeiboUserInfoPO();
+						weiboUserInfoPO.setId(jsonWeiboUser.getString("id"));
+						weiboUserInfoPO.setAvatar_large(jsonWeiboUser
+								.getString("avatar_large"));
+						weiboUserInfoPO.setName(jsonWeiboUser.getString("name"));
+						weiboUserInfoPO.setScreen_name(jsonWeiboUser
+								.getString("screen_name"));
+						weiboUserInfoPO.setPic_path(getActivity().getFilesDir()
+								+ "/filmApp/" + weiboUserInfoPO.getId()
+								+ ".jpg");
+						list.add(weiboUserInfoPO);
+						Bitmap bitmap = GetImage.getHttpBitmap(weiboUserInfoPO.getAvatar_large());
+						FileManager.saveBitmapToFile(bitmap, weiboUserInfoPO.getPic_path());
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				return "";
+			}
+
+			@Override
+			protected void onPostExecute(String result) {
+				super.onPostExecute(result);
+			}
+		};
+		
+		try {
+			SocialNetworkRequest.getUserId(getActivity(),new RequestListener() {
+				@Override
+				public void onIOException(IOException e) {
+					Log.i(TAG, e.toString());
+					new Runnable() {
+						@Override
+						public void run() {
+							Toast.makeText(getActivity(),
+									"userTimeline IOException!!!",
+									Toast.LENGTH_LONG).show();
+						}
+					};
+				}
+
+				@Override
+				public void onError(WeiboException e) {
+					Log.i(TAG, e.toString());
+					new Runnable() {
+						@Override
+						public void run() {
+							Toast.makeText(getActivity(),
+									"userTimeline Error!!!",
+									Toast.LENGTH_LONG).show();
+						}
+					};
+				}
+
+				@Override
+				public void onComplete(String response) {
+					Log.i(TAG, response);
+					try {
+						JSONObject json = new JSONObject(response);
+						JSONArray array = json.getJSONArray("statuses");
+						JSONObject firstFeed = array.getJSONObject(0);
+						JSONObject user = firstFeed.getJSONObject("user");
+						String userId = user.getString("id");
+						Log.i("userTimeline", firstFeed.toString());
+						Log.i("userTimeline", user.toString());
+						Log.i("userTimeline", userId);
+						SharedPreferences pref = getActivity()
+								.getSharedPreferences(USERID,
+										Context.MODE_APPEND);
+						Editor editor = pref.edit();
+						editor.putString("userId", userId);
+						editor.commit();
+						new Thread(new Runnable() {
+							@Override
+							public void run() {
+								Looper.prepare();
+								try {
+									SocialNetworkRequest.getFriendList(getActivity(),new RequestListener() {
+										@Override
+										public void onIOException(IOException e) {
+											Log.i(TAG, e.toString());
+											new Runnable() {
+												@Override
+												public void run() {
+													Toast.makeText(getActivity(), "GETFRIENDLIST IOException!!!",
+															Toast.LENGTH_LONG).show();
+												}
+											};
+										}
+
+										@Override
+										public void onError(WeiboException e) {
+											Log.i(TAG, e.toString());
+											new Runnable() {
+												@Override
+												public void run() {
+													Toast.makeText(getActivity(), "GETFRIENDLIST Error!!!",
+															Toast.LENGTH_LONG).show();
+												}
+											};
+										}
+
+										@Override
+										public void onComplete(final String response) {
+
+											Log.i(TAG, response);
+											SharedPreferences pref = getActivity().getSharedPreferences(
+													FRIENDLIST, Context.MODE_APPEND);
+											Editor editor = pref.edit();
+											editor.putString(FRIENDLIST, response);
+											editor.commit();
+											asyncTask.execute(response);
+										}
+									});
+								} catch (JSONException e) {
+									e.printStackTrace();
+								}
+								Looper.loop();
+							}
+						}).start();
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+
+				}
+			});
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 		
 		
-		DisplayMetrics  dm = new DisplayMetrics();    
+		
+		DisplayMetrics dm = new DisplayMetrics();    
 		getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);    
 	    mWidth = dm.widthPixels;              
 		mHeight = dm.heightPixels;  

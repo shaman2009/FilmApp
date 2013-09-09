@@ -1,9 +1,18 @@
 package com.weibo.sdk.android.demo.Fragment;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
@@ -21,6 +30,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.weibo.sdk.android.demo.R;
+import com.weibo.sdk.android.demo.SocialNetworkRequest.SocialNetworkRequest;
+import com.weibo.sdk.android.demo.SocialNetworkRequest.WeiboUserInfoPO;
+import com.weibo.sdk.android.util.FileManager;
+import com.weibo.sdk.android.util.GetImage;
 
 public class MovieFragment extends Fragment {
 	
@@ -28,42 +41,16 @@ public class MovieFragment extends Fragment {
 	private BaseAdapter mAdapter ;
 	private int mHeight;
 	private int mWidth;
-	
-	public void initData(){
+	public static List<WeiboUserInfoPO> list;
+
+	public void initData(List<WeiboUserInfoPO> list){
 		mDatas.clear();
-		Data d = new Data();
-		d.mName = "aaa"; 
-		mDatas.add(d);
-		
-		d = new Data();
-		d.mName = "bbbb"; 
-		mDatas.add(d);
-		
-		d = new Data();
-		d.mName = "cc"; 
-		mDatas.add(d);
-		
-		d = new Data();
-		d.mName = "ddddd"; 
-		mDatas.add(d);
-		
-		d = new Data();
-		d.mName = "ee"; 
-		mDatas.add(d);
-		
-		d = new Data();
-		d.mName = "雷布斯"; 
-		mDatas.add(d);
-		
-		d = new Data();
-		d.mName = "gg"; 
-		mDatas.add(d);
-		
-		d = new Data();
-		d.mName = "hh"; 
-		mDatas.add(d);
-		
-		
+		for (WeiboUserInfoPO weiboUserInfoPO : list) {
+			Data data = new Data();
+			data.mImage = FileManager.loadBitmapFromFile(weiboUserInfoPO.getPic_path());
+			data.mName = weiboUserInfoPO.getName();
+			mDatas.add(data);
+		}
 		if(mAdapter!= null) {
 			mAdapter.notifyDataSetChanged();
 		}
@@ -75,14 +62,24 @@ public class MovieFragment extends Fragment {
 		if (savedInstanceState != null) {
 //			mDatas = (ArrayList<Data>) savedInstanceState.getSerializable("listViewData");
 		}
+		list = PostFragment.list;
+		initData(list);
+
 		
+		
+		
+		
+		
+		
+			
+			
+			
 		DisplayMetrics  dm = new DisplayMetrics();    
 		getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);    
 	    mWidth = dm.widthPixels;              
 		mHeight = dm.heightPixels;  
 		
 		FrameLayout mFrame = new FrameLayout(getActivity());
-		initData();
 		
 		FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
 		mFrame.setLayoutParams(lp);
@@ -120,6 +117,7 @@ public class MovieFragment extends Fragment {
 					return convertView ;
 				}
 				mHolder.mText.setText(d.mName);
+				mHolder.mImage.setImageBitmap(d.mImage);
 				mHolder.mCheck.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 					
 					@Override
@@ -138,7 +136,7 @@ public class MovieFragment extends Fragment {
 	}
 	
 	class Data {
-		Drawable mImage ;
+		Bitmap mImage ;
 		String mName ;
 	}
 	

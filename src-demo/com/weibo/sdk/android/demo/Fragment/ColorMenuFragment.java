@@ -17,12 +17,9 @@ import com.weibo.sdk.android.demo.LoginActivity;
 import com.weibo.sdk.android.demo.R;
 import com.weibo.sdk.android.demo.SettingsActivity;
 import com.weibo.sdk.android.demo.SlidingmenuActivity;
-import com.weibo.sdk.android.demo.R.array;
-import com.weibo.sdk.android.demo.R.color;
-import com.weibo.sdk.android.demo.R.layout;
 
 public class ColorMenuFragment extends ListFragment {
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.list, null);
