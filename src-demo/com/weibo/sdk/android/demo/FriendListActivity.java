@@ -64,6 +64,7 @@ public class FriendListActivity extends FragmentActivity {
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 	}
+	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

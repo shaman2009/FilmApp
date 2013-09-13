@@ -5,6 +5,7 @@
  */
 package com.weibo.sdk.android.demo.Fragment;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,6 +31,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -61,7 +65,7 @@ public class PostFragment extends Fragment{
 	public static final String FRIENDLIST = "friendList";
 	public static List<WeiboUserInfoPO> list;
 
-
+	AsyncTask<String, Void, String> asyncTask;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,7 +73,11 @@ public class PostFragment extends Fragment{
 			
 			
 		}
-		final AsyncTask<String, Void, String> asyncTask = new AsyncTask<String, Void, String>() {
+		if (asyncTask != null) {
+			asyncTask.cancel(true)
+			;
+		}
+		asyncTask = new AsyncTask<String, Void, String>() {
 			@Override
 			protected String doInBackground(String... params) {
 				list = new ArrayList<WeiboUserInfoPO>();
@@ -77,6 +85,7 @@ public class PostFragment extends Fragment{
 				try {
 					json = new JSONObject(params[0]);
 					JSONArray array = json.getJSONArray("users");
+					int count = 0;
 					for (int i = 0; i < array.length(); i++) {
 						JSONObject jsonWeiboUser = array.getJSONObject(i);
 						WeiboUserInfoPO weiboUserInfoPO = new WeiboUserInfoPO();
@@ -90,13 +99,27 @@ public class PostFragment extends Fragment{
 								+ "/filmApp/" + weiboUserInfoPO.getId()
 								+ ".jpg");
 						list.add(weiboUserInfoPO);
-						Bitmap bitmap = GetImage.getHttpBitmap(weiboUserInfoPO.getAvatar_large());
-						FileManager.saveBitmapToFile(bitmap, weiboUserInfoPO.getPic_path());
+						if(count > 10) {
+							count++;
+							publishProgress(null);
+						}
+						
+						File file = new File(weiboUserInfoPO.getPic_path());
+						if (!file.exists()) {
+							Bitmap bitmap = GetImage.getHttpBitmap(weiboUserInfoPO.getAvatar_large());
+							FileManager.saveBitmapToFile(bitmap, weiboUserInfoPO.getPic_path());
+						}
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
 				return "";
+			}
+
+			@Override
+			protected void onProgressUpdate(Void... values) {
+				// TODO Auto-generated method stub
+				super.onProgressUpdate(values);
 			}
 
 			@Override
@@ -154,7 +177,7 @@ public class PostFragment extends Fragment{
 						new Thread(new Runnable() {
 							@Override
 							public void run() {
-								Looper.prepare();
+//								Looper.prepare();
 								try {
 									SocialNetworkRequest.getFriendList(getActivity(),new RequestListener() {
 										@Override
@@ -196,7 +219,7 @@ public class PostFragment extends Fragment{
 								} catch (JSONException e) {
 									e.printStackTrace();
 								}
-								Looper.loop();
+//								Looper.loop();
 							}
 						}).start();
 					} catch (JSONException e) {
@@ -220,7 +243,7 @@ public class PostFragment extends Fragment{
 		
 		// construct the RelativeLayout
 		RelativeLayout v = new RelativeLayout(getActivity());
-		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(mWidth,mHeight *2/5);
+		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(mWidth,mHeight);
 		
 		
 		
@@ -313,6 +336,7 @@ public class PostFragment extends Fragment{
 		
 		RelativeLayout.LayoutParams frameLayoutParams = new RelativeLayout.LayoutParams(mWidth,60);
 		frameLayoutParams.addRule(RelativeLayout.ALIGN_BOTTOM, INPUTEDITTEXTID);
+		frameLayoutParams.bottomMargin = 20;
 		frameLayout.setLayoutParams(frameLayoutParams);
 		
 		
@@ -320,16 +344,32 @@ public class PostFragment extends Fragment{
 		v.addView(editText);
 		v.addView(frameLayout);
 		v.addView(postButtonFrameLayout);
+		getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+		InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+		in.showSoftInput(editText, InputMethodManager.SHOW_FORCED);
 		
 		return v;
 	}
 	
+	
+	
+	
+	@Override
+	public void onDestroyView() {
+		if (asyncTask != null) {
+			asyncTask.cancel(true);
+		}
+		super.onDestroyView();
+	}
+
+
+
+
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		//todo
 	}
-	
 	
 	
 	public void getFriendListActivity(String s) {

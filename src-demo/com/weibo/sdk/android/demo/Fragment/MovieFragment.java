@@ -65,15 +65,6 @@ public class MovieFragment extends Fragment {
 		list = PostFragment.list;
 		initData(list);
 
-		
-		
-		
-		
-		
-		
-			
-			
-			
 		DisplayMetrics  dm = new DisplayMetrics();    
 		getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);    
 	    mWidth = dm.widthPixels;              
