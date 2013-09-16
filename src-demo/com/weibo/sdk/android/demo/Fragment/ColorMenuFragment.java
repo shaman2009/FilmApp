@@ -42,7 +42,7 @@ public class ColorMenuFragment extends ListFragment {
 			newContent = new PostFragment();
 			break;
 		case 1:
-			newContent = new MovieFragment();
+			newContent = new GetFriendListFragment();
 			break;
 		case 2:
 			newContent = new ColorFragment(R.color.blue);

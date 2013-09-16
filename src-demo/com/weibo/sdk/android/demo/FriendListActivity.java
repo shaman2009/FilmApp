@@ -1,16 +1,28 @@
 package com.weibo.sdk.android.demo;
 
+import java.io.IOException;
+
+import org.json.JSONException;
+
 import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.weibo.sdk.android.WeiboException;
 import com.weibo.sdk.android.demo.Fragment.ColorFragment;
-import com.weibo.sdk.android.demo.Fragment.MovieFragment;
+import com.weibo.sdk.android.demo.Fragment.GetFriendListFragment;
+import com.weibo.sdk.android.demo.SocialNetworkRequest.SocialNetworkRequest;
+import com.weibo.sdk.android.net.RequestListener;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -42,7 +54,7 @@ public class FriendListActivity extends FragmentActivity {
 			
 		}
 		if (mContent == null)
-			mContent = new MovieFragment();
+			mContent = new GetFriendListFragment();
 		
 		
 		getSupportFragmentManager()
@@ -52,6 +64,10 @@ public class FriendListActivity extends FragmentActivity {
 		// set the Above View 
 		setContentView(R.layout.content_frame);
 		setupActionBar();
+		
+		
+		
+		
 	}
 
 	/**

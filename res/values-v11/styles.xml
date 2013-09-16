@@ -12,4 +12,9 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
+    <style name="AppTheme" parent="Theme.Sherlock.Light.DarkActionBar">
+        <item name="homeAsUpIndicator">@drawable/new_indicator</item>
+        <item name="android:homeAsUpIndicator">@drawable/new_indicator</item>
+    </style>
+
 </resources>

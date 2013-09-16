@@ -22,6 +22,8 @@ public class SlidingmenuActivity extends BaseActivity {
 		if (savedInstanceState != null) {
 			mContent = getSupportFragmentManager().getFragment(savedInstanceState, "mContent");
 		}
+
+		
 		if (mContent == null) {
 			mContent = new PostFragment();	
 		}
