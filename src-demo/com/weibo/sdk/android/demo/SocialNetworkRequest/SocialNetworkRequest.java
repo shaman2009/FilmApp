@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -78,13 +79,15 @@ public class SocialNetworkRequest {
 				Context.MODE_APPEND);
 		String userId = pref.getString("userId", "");
 		if (userId == null || "".equals(userId)) {
-			new Runnable() {
+			((Activity) context).runOnUiThread(new Runnable() {
+				
 				@Override
 				public void run() {
+
 					Toast.makeText(context, "You have not got userId yet!!!",
 							Toast.LENGTH_LONG).show();
 				}
-			};
+			});
 			return;
 		}
 		long uid = Long.valueOf(userId);

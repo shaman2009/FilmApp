@@ -57,7 +57,7 @@ public class PostFragment extends Fragment{
 	public static final String TAG = "sinasdk";
 	public static final String USERID = "userId";
 	public static final String FRIENDLIST = "friendList";
-	public static List<WeiboUserInfoPO> list;
+//	public static List<WeiboUserInfoPO> list;
 
 	
 	
@@ -72,7 +72,7 @@ public class PostFragment extends Fragment{
 		try {
 			SharedPreferences pref = getActivity().getSharedPreferences(USERID, Context.MODE_APPEND);
 			String userId = pref.getString("userId", "");
-			if (userId != null && !"".equals(userId)) {
+			if (userId == null || "".equals(userId)) {
 				SocialNetworkRequest.getUserId(getActivity(),new RequestListener() {
 					@Override
 					public void onIOException(IOException e) {

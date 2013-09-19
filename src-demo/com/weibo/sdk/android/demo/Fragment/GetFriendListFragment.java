@@ -12,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -56,7 +57,7 @@ public class GetFriendListFragment extends Fragment {
 	private int mWidth;
 	private int mSize = 8;
 	public static List<WeiboUserInfoPO> list;
-	private Map<Integer, Data> selectMap = new HashMap<Integer, Data>();  
+	private ArrayList<Data> selectMap = new ArrayList<Data>();  
 	AsyncTask<String, Void, String> asyncTask;
 	public static final String ADDFRIENDLISTNAME = "ADDFRIENDLISTNAME";
 	
@@ -75,7 +76,7 @@ public class GetFriendListFragment extends Fragment {
 		// get friendlist info from weibo
 		final AlertDialog builder = new AlertDialog.Builder(getActivity()).setMessage("Loading").show(); 
 		
-		list = PostFragment.list;
+//		list = PostFragment.list;
 		initData(list);
 
 		DisplayMetrics dm = new DisplayMetrics();
@@ -115,23 +116,39 @@ public class GetFriendListFragment extends Fragment {
 				} else {
 					mHolder = (ViewHolder) convertView.getTag();
 				}
-				Data d = mDatas.get(position);
+				final Data d = mDatas.get(position);
 				if (d == null) {
 					return convertView;
 				}
 				mHolder.mText.setText(d.mName);
 				mHolder.mImage.setImageBitmap(d.mImage);
-				mHolder.mCheck.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				boolean checked =  selectMap.contains(d);
+				Log.e("test", "eda" + checked);
+				if(checked) {
+					mHolder.mCheck.setChecked(true);
+				} else {
+					mHolder.mCheck.setChecked(false);
+				}
+				mHolder.mCheck.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						if(selectMap.contains(d)) {
+							selectMap.remove(d);
+							Log.d("qweeeeee", d.mName);
+						}else {
+								selectMap.add(d);
+								Log.d("qwe", d.mName);
+						}
+						getActivity().runOnUiThread(new Runnable() {
+							
 							@Override
-							public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-								if(selectMap.get(position) != null) {
-									selectMap.remove(position);
-								}else {
-									selectMap.put(position,mDatas.get(position));
-									Log.d("qwe", selectMap.get(position).mName);
-								}
+							public void run() {
+								mAdapter.notifyDataSetChanged();
 							}
 						});
+					}
+				});
 				return convertView;
 			}
 		};
@@ -155,9 +172,9 @@ public class GetFriendListFragment extends Fragment {
 				}
 				String str = "";
 				Log.d("qwe", "size : " + z);
-				Iterator it = selectMap.keySet().iterator();
+				Iterator<Data> it = selectMap.iterator();
 				while (it.hasNext()) {
-					str = str + "@" + selectMap.get(it.next()).mName + " ";
+					str = str + "@" + it.next().mName + " ";
 				}
 				Intent intent = new Intent(getActivity(), SlidingmenuActivity.class);
 				intent.putExtra(ADDFRIENDLISTNAME, str);
@@ -186,6 +203,7 @@ public class GetFriendListFragment extends Fragment {
 							new RequestListener() {
 								@Override
 								public void onIOException(IOException e) {
+									Log.e("test", "onIOException" );
 									new Runnable() {
 										@Override
 										public void run() {
@@ -195,15 +213,17 @@ public class GetFriendListFragment extends Fragment {
 								}
 								@Override
 								public void onError(WeiboException e) {
-									new Runnable() {
+									Log.e("test", "on error");
+									getActivity().runOnUiThread(new Runnable() {
 										@Override
 										public void run() {
 											Toast.makeText(getActivity(), "GETFRIENDLIST Error!!!", Toast.LENGTH_LONG).show();
 										}
-									};
+									});
 								}
 								@Override
 								public void onComplete(final String response) {
+									Log.e("test", "on complete");
 									SharedPreferences pref = getActivity().getSharedPreferences(PostFragment.FRIENDLIST, Context.MODE_APPEND);
 									Editor editor = pref.edit();
 									editor.putString(PostFragment.FRIENDLIST, response);
@@ -219,6 +239,7 @@ public class GetFriendListFragment extends Fragment {
 		asyncTask = new AsyncTask<String, Void, String>() {
 			@Override
 			protected String doInBackground(String... params) {
+				Log.e("test", "do in back");
 				list = new ArrayList<WeiboUserInfoPO>();
 				JSONObject json;
 				try {
@@ -255,16 +276,23 @@ public class GetFriendListFragment extends Fragment {
 			}
 			@Override
 			protected void onProgressUpdate(Void... values) {
+				Log.e("test", "update progress");
 				super.onProgressUpdate(values);
 				if (mAdapter != null) {
 					builder.cancel();
 					Log.i(PostFragment.TAG, "onProgressUpdate");
-					mAdapter.notifyDataSetChanged();
+					getActivity().runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							mAdapter.notifyDataSetChanged();
+						}
+					});
 				}
 			}
 
 			@Override
 			protected void onPostExecute(String result) {
+				Log.e("test", "post execute");
 				super.onPostExecute(result);
 			}
 		};
@@ -274,6 +302,13 @@ public class GetFriendListFragment extends Fragment {
 	class Data {
 		Bitmap mImage;
 		String mName;
+		@Override
+		public boolean equals(Object o) {
+			if (o instanceof Data) {
+				return mImage == ((Data) o).mImage && String.valueOf(mName).equals(((Data) o).mName);
+			}
+			return false;
+		}
 	}
 
 	class ViewHolder {
@@ -342,6 +377,13 @@ public class GetFriendListFragment extends Fragment {
 			data.mImage = FileManager.loadBitmapFromFile(weiboUserInfoPO.getPic_path());
 			data.mName = weiboUserInfoPO.getName();
 			mDatas.add(data);
+			getActivity().runOnUiThread(new Runnable() {
+				
+				@Override
+				public void run() {
+					mAdapter.notifyDataSetChanged();
+				}
+			});
 		}
 	}
 
