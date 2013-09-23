@@ -3,16 +3,13 @@ package com.weibo.sdk.android.demo.Fragment;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -32,8 +29,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -77,7 +72,7 @@ public class GetFriendListFragment extends Fragment {
 		final AlertDialog builder = new AlertDialog.Builder(getActivity()).setMessage("Loading").show(); 
 		
 //		list = PostFragment.list;
-		initData(list);
+//		initData(list);
 
 		DisplayMetrics dm = new DisplayMetrics();
 		getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -123,7 +118,6 @@ public class GetFriendListFragment extends Fragment {
 				mHolder.mText.setText(d.mName);
 				mHolder.mImage.setImageBitmap(d.mImage);
 				boolean checked =  selectMap.contains(d);
-				Log.e("test", "eda" + checked);
 				if(checked) {
 					mHolder.mCheck.setChecked(true);
 				} else {
@@ -140,13 +134,13 @@ public class GetFriendListFragment extends Fragment {
 								selectMap.add(d);
 								Log.d("qwe", d.mName);
 						}
-						getActivity().runOnUiThread(new Runnable() {
-							
-							@Override
-							public void run() {
-								mAdapter.notifyDataSetChanged();
-							}
-						});
+//						getActivity().runOnUiThread(new Runnable() {
+//							
+//							@Override
+//							public void run() {
+//								mAdapter.notifyDataSetChanged();
+//							}
+//						});
 					}
 				});
 				return convertView;
@@ -224,6 +218,9 @@ public class GetFriendListFragment extends Fragment {
 								@Override
 								public void onComplete(final String response) {
 									Log.e("test", "on complete");
+									if(getActivity() == null) {
+										return;
+									}
 									SharedPreferences pref = getActivity().getSharedPreferences(PostFragment.FRIENDLIST, Context.MODE_APPEND);
 									Editor editor = pref.edit();
 									editor.putString(PostFragment.FRIENDLIST, response);
@@ -260,11 +257,11 @@ public class GetFriendListFragment extends Fragment {
 							Log.i(PostFragment.TAG, list + " " + count);
 							count = 0;
 							initData(list);
+							list.clear();
 							publishProgress();
 						}
 						File file = new File(weiboUserInfoPO.getPic_path());
 						if(!file.exists()) {
-//						if(true) {
 							Bitmap bitmap = GetImage.getHttpBitmap(weiboUserInfoPO.getAvatar_large());
 							FileManager.saveBitmapToFile(bitmap, weiboUserInfoPO.getPic_path());
 						}
@@ -281,12 +278,14 @@ public class GetFriendListFragment extends Fragment {
 				if (mAdapter != null) {
 					builder.cancel();
 					Log.i(PostFragment.TAG, "onProgressUpdate");
-					getActivity().runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							mAdapter.notifyDataSetChanged();
-						}
-					});
+					if(mAdapter != null) {
+						getActivity().runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								mAdapter.notifyDataSetChanged();
+							}
+						});
+					}
 				}
 			}
 
@@ -367,24 +366,28 @@ public class GetFriendListFragment extends Fragment {
 		}
 
 	}
-	
+	int i;
 	public void initData(List<WeiboUserInfoPO> list) {
 		if (list == null) {
 			return;
 		}
+		Log.e("feifei",String.valueOf(list.size()));
 		for (WeiboUserInfoPO weiboUserInfoPO : list) {
 			Data data = new Data();
 			data.mImage = FileManager.loadBitmapFromFile(weiboUserInfoPO.getPic_path());
 			data.mName = weiboUserInfoPO.getName();
 			mDatas.add(data);
-			getActivity().runOnUiThread(new Runnable() {
-				
-				@Override
-				public void run() {
-					mAdapter.notifyDataSetChanged();
-				}
-			});
+			if(mAdapter != null) {
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						mAdapter.notifyDataSetChanged();
+					}
+				});
+			}
 		}
+		Log.e("feifei",String.valueOf(mDatas.size()));
+		Log.e("feifei",String.valueOf(i++));
 	}
 
 	@Override

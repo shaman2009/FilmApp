@@ -6,7 +6,6 @@
 package com.weibo.sdk.android.demo.Fragment;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,8 +36,8 @@ import android.widget.Toast;
 
 import com.weibo.sdk.android.WeiboException;
 import com.weibo.sdk.android.demo.FriendListActivity;
+import com.weibo.sdk.android.demo.R;
 import com.weibo.sdk.android.demo.SocialNetworkRequest.SocialNetworkRequest;
-import com.weibo.sdk.android.demo.SocialNetworkRequest.WeiboUserInfoPO;
 import com.weibo.sdk.android.net.RequestListener;
 
 /**
@@ -47,10 +46,11 @@ import com.weibo.sdk.android.net.RequestListener;
  * PostFragment.java
  * @author fengxiang
  */
-public class PostFragment extends Fragment{
+public class PostFragment extends Fragment {
 	
 	private int mHeight;
 	private int mWidth;
+	private EditText editText;
 	
 	public static final int INPUTEDITTEXTID = 999999;
 	public static final int BUTTONSGROUP = 999998;
@@ -65,7 +65,7 @@ public class PostFragment extends Fragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if (savedInstanceState != null) {
 		}
-		
+		new SocialNetworkRequest(getActivity());
 		Intent intent = getActivity().getIntent();
 	    String addFriendListName = intent.getStringExtra(GetFriendListFragment.ADDFRIENDLISTNAME);
 		
@@ -145,7 +145,7 @@ public class PostFragment extends Fragment{
 		
 		
 		
-		final EditText editText = new EditText(getActivity());
+	    editText = new EditText(getActivity());
 		editText.setHint("Thinking in Java");
 		editText.setTextSize(20);
 //		editText.setFocusable(true);   
@@ -167,11 +167,19 @@ public class PostFragment extends Fragment{
 		Button button_post = new Button(getActivity());
 		
 		button_post.setText("POST");
-		button_at.setText("@");
+		button_at.setBackgroundResource(R.drawable.selector_btn_mention);
 		button_emoji.setText("E");
 		button_pic.setText("P");
-		button_tag.setText("#");
+		button_tag.setBackgroundResource(R.drawable.selector_btn_topic);
 		button_location.setText("L");
+		
+		button_post.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				SocialNetworkRequest.sendMessage(getActivity(), editText.getText().toString());
+			}
+		});
 		
 		button_tag.setOnClickListener(new OnClickListener() {
 			
@@ -191,7 +199,8 @@ public class PostFragment extends Fragment{
 					@Override
 					public void run() {
 						Looper.prepare();
-						getFriendListActivity("");
+						Intent intent = new Intent(getActivity(), FriendListActivity.class);
+					    startActivity(intent);
 						Looper.loop();
 					}
 				}).start();
@@ -265,24 +274,9 @@ public class PostFragment extends Fragment{
 		}
 		return v;
 	}
-	
-	
-	
-	
-
-
-
-
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		//todo
-	}
-	
-	
-	public void getFriendListActivity(String s) {
-		Intent intent = new Intent(getActivity(), FriendListActivity.class);
-//	    intent.putExtra(MOVIE_MESSAGE, s);
-	    startActivity(intent);
 	}
 }

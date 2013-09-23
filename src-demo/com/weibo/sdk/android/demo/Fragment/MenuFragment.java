@@ -18,7 +18,7 @@ import com.weibo.sdk.android.demo.R;
 import com.weibo.sdk.android.demo.SettingsActivity;
 import com.weibo.sdk.android.demo.SlidingmenuActivity;
 
-public class ColorMenuFragment extends ListFragment {
+public class MenuFragment extends ListFragment {
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class ColorMenuFragment extends ListFragment {
 			newContent = new PostFragment();
 			break;
 		case 1:
-			newContent = new GetFriendListFragment();
+			newContent = new MoviesFragment();
 			break;
 		case 2:
 			newContent = new ColorFragment(R.color.blue);
@@ -56,15 +56,15 @@ public class ColorMenuFragment extends ListFragment {
 			break;
 		case 5:
 			new AlertDialog.Builder(getActivity())
-				.setTitle("注销")
-				.setMessage("你是否确定要登出")
-				.setNegativeButton("取消", null)
-				.setNeutralButton("确定", new OnClickListener() {
+				.setTitle("Logout")
+				.setMessage("Sure to logout?")
+				.setNegativeButton("Cancel", null)
+				.setNeutralButton("Sure", new OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					
-					LoginActivity loginActivity = new LoginActivity();
-					loginActivity.deleteloginsession(getActivity());
+//					LoginActivity loginActivity = new LoginActivity();
+					LoginActivity.deleteloginsession(getActivity());
 					Intent intent = new Intent(getActivity(), LoginActivity.class);
 				    startActivity(intent);
 				    getActivity().finish();

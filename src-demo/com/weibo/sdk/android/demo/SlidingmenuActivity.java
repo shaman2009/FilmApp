@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.weibo.sdk.android.demo.Fragment.ColorMenuFragment;
+import com.weibo.sdk.android.demo.Fragment.MenuFragment;
 import com.weibo.sdk.android.demo.Fragment.PostFragment;
 
 public class SlidingmenuActivity extends BaseActivity {
@@ -37,7 +37,7 @@ public class SlidingmenuActivity extends BaseActivity {
 		setBehindContentView(R.layout.menu_frame);
 		getSupportFragmentManager()
 		.beginTransaction()
-		.replace(R.id.menu_frame, new ColorMenuFragment())
+		.replace(R.id.menu_frame, new MenuFragment())
 		.commit();
 		// customize the SlidingMenu
 		getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
