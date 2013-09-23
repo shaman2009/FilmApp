@@ -172,7 +172,7 @@ public class DoubanDialog extends Dialog {
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
 			Log.d(TAG, "Redirect URL: " + url);
-			 if (url.startsWith("sms:")) {  //针对webview里的短信注册流程，需要在此单独处理sms协议
+			 if (url.startsWith("sms:")) {  //閽堝webview閲岀殑鐭俊娉ㄥ唽娴佺▼锛岄渶瑕佸湪姝ゅ崟鐙鐞唖ms鍗忚
 	                Intent sendIntent = new Intent(Intent.ACTION_VIEW);  
 	                sendIntent.putExtra("address", url.replace("sms:", ""));  
 	                sendIntent.setType("vnd.android-dir/mms-sms");  
@@ -227,7 +227,7 @@ public class DoubanDialog extends Dialog {
 		if (error == null && error_code == null) {
 			mListener.onComplete(values);
 		} else if (error.equals("access_denied")) {
-			// 用户或授权服务器拒绝授予数据访问权限
+			// 鐢ㄦ埛鎴栨巿鏉冩湇鍔″櫒鎷掔粷鎺堜簣鏁版嵁璁块棶鏉冮檺
 			mListener.onCancel();
 		} else {
 			if(error_code==null){
@@ -277,7 +277,7 @@ public class DoubanDialog extends Dialog {
                         }
                         break;
                     }
-                    eventCode = xmlpull.next();//没有结束xml文件就推到下个进行解析  
+                    eventCode = xmlpull.next();//娌℃湁缁撴潫xml鏂囦欢灏辨帹鍒颁笅涓繘琛岃В鏋� 
                 }
                 
             } catch (XmlPullParserException e) {
