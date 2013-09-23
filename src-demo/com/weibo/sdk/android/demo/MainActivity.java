@@ -45,7 +45,7 @@ import com.weibo.sdk.android.api.FriendshipsAPI;
 import com.weibo.sdk.android.api.StatusesAPI;
 import com.weibo.sdk.android.api.WeiboAPI.FEATURE;
 import com.weibo.sdk.android.demo.Fragment.ColorFragment;
-import com.weibo.sdk.android.demo.Fragment.ColorMenuFragment;
+import com.weibo.sdk.android.demo.Fragment.MenuFragment;
 import com.weibo.sdk.android.demo.Fragment.SampleListFragment;
 import com.weibo.sdk.android.doubanapi.AuthAPI;
 import com.weibo.sdk.android.doubanapi.MovieAPI;
@@ -132,7 +132,7 @@ public class MainActivity extends BaseActivity {
 		setBehindContentView(R.layout.menu_frame);
 		getSupportFragmentManager()
 		.beginTransaction()
-		.replace(R.id.menu_frame, new ColorMenuFragment())
+		.replace(R.id.menu_frame, new MenuFragment())
 		.commit();
 		
 		// customize the SlidingMenu
