@@ -51,7 +51,7 @@ public class GetFriendListFragment extends Fragment {
 	private int mHeight;
 	private int mWidth;
 	private int mSize = 8;
-	public static List<WeiboUserInfoPO> list;
+	public static List<WeiboUserInfoPO> userInfoList;
 	private ArrayList<Data> selectMap = new ArrayList<Data>();  
 	AsyncTask<String, Void, String> asyncTask;
 	public static final String ADDFRIENDLISTNAME = "ADDFRIENDLISTNAME";
@@ -71,8 +71,8 @@ public class GetFriendListFragment extends Fragment {
 		// get friendlist info from weibo
 		final AlertDialog builder = new AlertDialog.Builder(getActivity()).setMessage("Loading").show(); 
 		
-//		list = PostFragment.list;
-//		initData(list);
+//		userInfoList = PostFragment.userInfoList;
+//		initData(userInfoList);
 
 		DisplayMetrics dm = new DisplayMetrics();
 		getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -236,8 +236,7 @@ public class GetFriendListFragment extends Fragment {
 		asyncTask = new AsyncTask<String, Void, String>() {
 			@Override
 			protected String doInBackground(String... params) {
-				Log.e("test", "do in back");
-				list = new ArrayList<WeiboUserInfoPO>();
+				userInfoList = new ArrayList<WeiboUserInfoPO>();
 				JSONObject json;
 				try {
 					json = new JSONObject(params[0]);
@@ -252,12 +251,12 @@ public class GetFriendListFragment extends Fragment {
 						weiboUserInfoPO.setScreen_name(jsonWeiboUser.getString("screen_name"));
 						weiboUserInfoPO.setPic_path(getActivity().getFilesDir() + "/filmApp/" + weiboUserInfoPO.getId() + ".jpg");
 						count++;
-						list.add(weiboUserInfoPO);
+						userInfoList.add(weiboUserInfoPO);
 						if (count > 10) {
-							Log.i(PostFragment.TAG, list + " " + count);
+							Log.i(PostFragment.TAG, userInfoList + " " + count);
 							count = 0;
-							initData(list);
-							list.clear();
+							initData(userInfoList);
+							userInfoList.clear();
 							publishProgress();
 						}
 						File file = new File(weiboUserInfoPO.getPic_path());
@@ -367,12 +366,12 @@ public class GetFriendListFragment extends Fragment {
 
 	}
 	int i;
-	public void initData(List<WeiboUserInfoPO> list) {
-		if (list == null) {
+	public void initData(List<WeiboUserInfoPO> userInfoList) {
+		if (userInfoList == null) {
 			return;
 		}
-		Log.e("feifei",String.valueOf(list.size()));
-		for (WeiboUserInfoPO weiboUserInfoPO : list) {
+		Log.e("feifei",String.valueOf(userInfoList.size()));
+		for (WeiboUserInfoPO weiboUserInfoPO : userInfoList) {
 			Data data = new Data();
 			data.mImage = FileManager.loadBitmapFromFile(weiboUserInfoPO.getPic_path());
 			data.mName = weiboUserInfoPO.getName();
@@ -386,8 +385,6 @@ public class GetFriendListFragment extends Fragment {
 				});
 			}
 		}
-		Log.e("feifei",String.valueOf(mDatas.size()));
-		Log.e("feifei",String.valueOf(i++));
 	}
 
 	@Override

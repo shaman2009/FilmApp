@@ -17,25 +17,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.weibo.sdk.android.WeiboException;
-import com.weibo.sdk.android.demo.FriendListActivity;
 import com.weibo.sdk.android.demo.R;
 import com.weibo.sdk.android.demo.SocialNetworkRequest.SocialNetworkRequest;
 import com.weibo.sdk.android.net.RequestListener;
@@ -48,30 +40,32 @@ import com.weibo.sdk.android.net.RequestListener;
  */
 public class PostFragment extends Fragment {
 	
-	private int mHeight;
-	private int mWidth;
 	private EditText editText;
-	
+	private String addFriendListName;
 	public static final int INPUTEDITTEXTID = 999999;
 	public static final int BUTTONSGROUP = 999998;
 	public static final String TAG = "sinasdk";
 	public static final String USERID = "userId";
+	public static final String POST_CONTENT = "post_content";
 	public static final String FRIENDLIST = "friendList";
+	
 //	public static List<WeiboUserInfoPO> list;
-
-	
-	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		new SocialNetworkRequest(getActivity());
+		Intent intent = getActivity().getIntent();
+	    addFriendListName = intent.getStringExtra(GetFriendListFragment.ADDFRIENDLISTNAME);
+	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if (savedInstanceState != null) {
 		}
-		new SocialNetworkRequest(getActivity());
-		Intent intent = getActivity().getIntent();
-	    String addFriendListName = intent.getStringExtra(GetFriendListFragment.ADDFRIENDLISTNAME);
+		View v = inflater.inflate(R.layout.fragment_post, container, false);
 		
 		try {
-			SharedPreferences pref = getActivity().getSharedPreferences(USERID, Context.MODE_APPEND);
-			String userId = pref.getString("userId", "");
+			SharedPreferences prefUserId = getActivity().getSharedPreferences(USERID, Context.MODE_APPEND);
+			String userId = prefUserId.getString("userId", "");
 			if (userId == null || "".equals(userId)) {
 				SocialNetworkRequest.getUserId(getActivity(),new RequestListener() {
 					@Override
@@ -112,9 +106,7 @@ public class PostFragment extends Fragment {
 							Log.i("userTimeline", firstFeed.toString());
 							Log.i("userTimeline", user.toString());
 							Log.i("userTimeline", userId);
-							SharedPreferences pref = getActivity()
-									.getSharedPreferences(USERID,
-											Context.MODE_APPEND);
+							SharedPreferences pref = getActivity().getSharedPreferences(USERID,Context.MODE_APPEND);
 							Editor editor = pref.edit();
 							editor.putString("userId", userId);
 							editor.commit();
@@ -130,153 +122,36 @@ public class PostFragment extends Fragment {
 			e.printStackTrace();
 		}
 		
-		
-		
-		DisplayMetrics dm = new DisplayMetrics();    
-		getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);    
-	    mWidth = dm.widthPixels;              
-		mHeight = dm.heightPixels;  
-		
-		
-		
-		// construct the RelativeLayout
-		RelativeLayout v = new RelativeLayout(getActivity());
-		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(mWidth,mHeight);
-		
-		
-		
-	    editText = new EditText(getActivity());
-		editText.setHint("Thinking in Java");
-		editText.setTextSize(20);
-//		editText.setFocusable(true);   
-//		editText.setFocusableInTouchMode(true);   
-//		editText.requestFocus();  
-		editText.setLayoutParams(lp);
-		editText.setId(INPUTEDITTEXTID);
-		editText.setGravity(Gravity.LEFT | Gravity.TOP);
-		
-		//Group buttons
-		FrameLayout frameLayout = new FrameLayout(getActivity());
-		frameLayout.setId(BUTTONSGROUP);
-		Button button_at,button_emoji,button_pic,button_tag,button_location;
-		button_at = new Button(getActivity());
-		button_emoji = new Button(getActivity());
-		button_pic = new Button(getActivity());
-		button_tag = new Button(getActivity());
-		button_location = new Button(getActivity());
-		Button button_post = new Button(getActivity());
-		
-		button_post.setText("POST");
-		button_at.setBackgroundResource(R.drawable.selector_btn_mention);
-		button_emoji.setText("E");
-		button_pic.setText("P");
-		button_tag.setBackgroundResource(R.drawable.selector_btn_topic);
-		button_location.setText("L");
-		
-		button_post.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				SocialNetworkRequest.sendMessage(getActivity(), editText.getText().toString());
-			}
-		});
-		
-		button_tag.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				int i = editText.getSelectionStart();
-				editText.append("##");
-				editText.setSelection(i + 1);
-			}
-		});
-		
-		button_at.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						Looper.prepare();
-						Intent intent = new Intent(getActivity(), FriendListActivity.class);
-					    startActivity(intent);
-						Looper.loop();
-					}
-				}).start();
-			}
-		});
-		
-		
-		int button_width = 100;
-		int button_height = 80;
-		
-		FrameLayout.LayoutParams layoutParamspost = new FrameLayout.LayoutParams(220,button_height);
-		layoutParamspost.gravity = Gravity.RIGHT | Gravity.TOP;
-		FrameLayout.LayoutParams layoutParamsat = new FrameLayout.LayoutParams(button_width,button_height);
-		layoutParamsat.gravity = Gravity.RIGHT | Gravity.TOP;
-		layoutParamsat.rightMargin = 230;
-		FrameLayout.LayoutParams layoutParamstag = new FrameLayout.LayoutParams(button_width,button_height);
-		layoutParamstag.gravity = Gravity.RIGHT | Gravity.TOP;
-		layoutParamstag.rightMargin = 350;
-		FrameLayout.LayoutParams layoutParamsemoji = new FrameLayout.LayoutParams(button_width,button_height);
-		layoutParamsemoji.gravity = Gravity.RIGHT | Gravity.TOP;
-		layoutParamsemoji.rightMargin = 350;
-		FrameLayout.LayoutParams layoutParamspic = new FrameLayout.LayoutParams(button_width,button_height);
-		layoutParamspic.gravity = Gravity.RIGHT | Gravity.TOP;
-		layoutParamspic.rightMargin =240;
-		FrameLayout.LayoutParams layoutParamslocation = new FrameLayout.LayoutParams(button_width,button_height);
-		layoutParamslocation.gravity = Gravity.RIGHT | Gravity.TOP;
-		layoutParamslocation.rightMargin = 480;
-		
-		button_post.setLayoutParams(layoutParamspost);
-		button_at.setLayoutParams(layoutParamsat);
-		button_emoji.setLayoutParams(layoutParamsemoji);
-		button_pic.setLayoutParams(layoutParamspic);
-		button_tag.setLayoutParams(layoutParamstag);
-		button_location.setLayoutParams(layoutParamslocation);
-		
-		frameLayout.addView(button_post);
-		frameLayout.addView(button_at);
-		frameLayout.addView(button_tag);
-//		frameLayout.addView(button_emoji);
-//		frameLayout.addView(button_pic);
-//		frameLayout.addView(button_location);
-		
-		
-
-		
-		
-		
-		
-		
-		RelativeLayout.LayoutParams frameLayoutParams = new RelativeLayout.LayoutParams(mWidth,60);
-		frameLayoutParams.addRule(RelativeLayout.ALIGN_BOTTOM, INPUTEDITTEXTID);
-		frameLayoutParams.bottomMargin = 20;
-		frameLayout.setLayoutParams(frameLayoutParams);
-		
-		
-		
-		v.addView(editText);
-		v.addView(frameLayout);
-		
-		
+		// 使得软键盘顶起界面 并且启动activity时候自动唤出
 		getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 		InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
 		in.showSoftInput(editText, InputMethodManager.SHOW_FORCED);
-		
-		if(addFriendListName != null && !"".equals(addFriendListName)) {
-			Log.d("123456",addFriendListName);
-			editText.append(addFriendListName);
-		}else {
-			Log.d("123456",123456 + " ");
-			
-		}
 		return v;
+	}
+	@Override
+	public void onStart() {
+		super.onStart();
+		editText = (EditText)getActivity().findViewById(R.id.post_content);
+		SharedPreferences prefPostContent = getActivity().getSharedPreferences(POST_CONTENT, Context.MODE_APPEND);
+		String postContent = prefPostContent.getString(POST_CONTENT, "");
+		if(!"".equals(postContent)) {
+			editText.setText(postContent);
+			Editor editor = prefPostContent.edit();
+			editor.putString(POST_CONTENT, "");
+			editor.commit();
+		}
+		
+		if(addFriendListName != null) {
+			editText.append(addFriendListName);
+		}
 	}
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		//todo
+		SharedPreferences pref = getActivity().getSharedPreferences(POST_CONTENT,Context.MODE_APPEND);
+		Editor editor = pref.edit();
+		editor.putString(POST_CONTENT, editText.getText().toString());
+		editor.commit();
 	}
+	
 }
