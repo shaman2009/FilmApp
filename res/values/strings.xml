@@ -50,6 +50,9 @@
     <string name="responsive_ui">Responsive UI</string>
     <string name="friends">Friends</string>
     <string name="hint_search">Search</string>
+    <string name="button_tag">#</string>
+    <string name="button_at">"@"</string>
+    <string name="button_post">Post</string>
     
     
 
