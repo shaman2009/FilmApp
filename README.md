@@ -12,3 +12,11 @@ app wiz fei
 - 加上自己想要说的话，然后点击“发布”
 - @好友自动补全
 
+依赖于项目
+
+- [JakeWharton/ActionBarSherlock](https://github.com/JakeWharton/ActionBarSherlock)
+- [jfeinstein10/SlidingMenu](https://github.com/jfeinstein10/SlidingMenu)
+
+技术上参考
+
+- [cattong/YiBo](https://github.com/cattong/YiBo)
