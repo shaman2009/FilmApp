@@ -53,7 +53,13 @@
     <string name="button_tag">#</string>
     <string name="button_at">"@"</string>
     <string name="button_post">Post</string>
-    
-    
+    <string name="app_id">600638156661082</string>
+    <string name="setting_account_binding_douban">douban</string>
+    <string name="setting_account_binding_weibo">weibo</string>
+    <string name="setting_account_binding_facebook">facebook</string>
+    <string name="setting_account_binding_yes">bind</string>
+    <string name="setting_account_binding_no">unbind</string>
+    <string name="title_activity_setting_account_binding">SocialAccount</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

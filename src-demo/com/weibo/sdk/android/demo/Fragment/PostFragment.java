@@ -48,6 +48,7 @@ public class PostFragment extends Fragment {
 	public static final String USERID = "userId";
 	public static final String POST_CONTENT = "post_content";
 	public static final String FRIENDLIST = "friendList";
+	public static final int asdffriendList = R.string.app_id;
 	
 //	public static List<WeiboUserInfoPO> list;
 	@Override

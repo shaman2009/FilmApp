@@ -22,11 +22,6 @@
         <intent android:action="android.settings.SYNC_SETTINGS" />
     </Preference>
     
-    <Preference android:title="SocialNetwork account sync" >
-        <intent 
-            	android:action="android.intent.action.MAIN"
-            	android:targetPackage="com.weibo.sdk.android.demo"
-            	android:targetClass="com.weibo.sdk.android.demo.FriendListActivity"/>
-    </Preference>
+
 
 </PreferenceScreen>
