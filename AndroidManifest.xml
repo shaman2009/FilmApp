@@ -26,7 +26,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>
             -->
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
@@ -181,8 +181,7 @@
             android:name="com.weibo.sdk.android.demo.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:parentActivityName="com.weibo.sdk.android.demo.SlidingmenuActivity"
-             android:theme="@style/Theme.Sherlock.Light" >
-           
+            android:theme="@style/Theme.Sherlock.Light" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.weibo.sdk.android.demo.SlidingmenuActivity" />
@@ -194,6 +193,20 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.weibo.sdk.android.demo.SlidingmenuActivity" />
+        </activity>
+        <activity android:name="com.facebook.LoginActivity" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/app_id" />
+
+        <activity
+            android:name="com.weibo.sdk.android.demo.SettingAccountBinding"
+            android:label="@string/title_activity_setting_account_binding"
+            android:parentActivityName="com.weibo.sdk.android.demo.SettingsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.weibo.sdk.android.demo.SettingsActivity" />
         </activity>
     </application>
 

@@ -81,8 +81,8 @@ public class LoginActivity extends Activity {
 	//weibo auth
 	private Weibo mWeibo;
 	private Douban mDouban;
-	private static final String WEIBO_CONSUMER_KEY = "2867503323";// 替换为开发者的appkey，例如"1646212860";
-	private static final String WEIBO_REDIRECT_URL = "http://jianshu.io/users/SLfZEb";
+	public static final String WEIBO_CONSUMER_KEY = "2867503323";// 替换为开发者的appkey，例如"1646212860";
+	public static final String WEIBO_REDIRECT_URL = "http://jianshu.io/users/SLfZEb";
 	private static final String DOUBAN_CONSUMER_KEY = "0e32be84b39035752a983b8e1ab0a05f";
 	private static final String DOUBAN_CLIENT_SECRET = "a560769d3d9b0dc7";
 	private static final String DOUBAN_REDIRECT_URL = "http://shaman.logdown.com";
@@ -99,7 +99,7 @@ public class LoginActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if(readloginsession()) {
+		if(readloginsession(this)) {
 			loginTask();
 		}
 		
@@ -155,6 +155,7 @@ public class LoginActivity extends Activity {
 						attemptLogin();
 					}
 				});
+		
 	}
 
 	@Override
@@ -460,8 +461,8 @@ public class LoginActivity extends Activity {
 		editor.putBoolean(LOGIN_SESSION, false);
 		editor.commit();
 	}
-	public boolean readloginsession() {
-		SharedPreferences p = LoginActivity.this.getSharedPreferences(LOGIN_SESSION, Context.MODE_APPEND);
+	public static boolean readloginsession(Context context) {
+		SharedPreferences p = context.getSharedPreferences(LOGIN_SESSION, Context.MODE_APPEND);
 		return p.getBoolean(LOGIN_SESSION, false);
 	}
 }

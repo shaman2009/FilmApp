@@ -1,5 +1,6 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
     tools:context=".LoginActivity" >
 
     <!-- Login progress -->
@@ -38,8 +39,8 @@
 
         <LinearLayout
             style="@style/LoginFormContainer"
-            android:orientation="vertical"
-            android:layout_marginTop="90dp" >
+            android:layout_marginTop="90dp"
+            android:orientation="vertical" >
 
             <EditText
                 android:id="@+id/email"
@@ -88,6 +89,14 @@
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
                 android:text="@string/action_sign_in_weibo" />
+
+            <com.facebook.widget.LoginButton
+                android:id="@+id/login_button"
+               android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"/>
         </LinearLayout>
     </ScrollView>
 
