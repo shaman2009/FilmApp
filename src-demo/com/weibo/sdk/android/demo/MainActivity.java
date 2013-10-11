@@ -105,6 +105,7 @@ public class MainActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// set the Behind View
+		Log.i("Tag", " start activity !");
 		setBehindContentView(R.layout.menu_frame);
 		if (savedInstanceState == null) {
 			FragmentTransaction t = this.getSupportFragmentManager().beginTransaction();

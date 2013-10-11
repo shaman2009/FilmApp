@@ -48,6 +48,7 @@ import com.weibo.sdk.android.sso.SsoHandler;
  * Activity which displays a login screen to the user, offering registration as
  * well.
  */
+
 public class LoginActivity extends Activity {
 	/**
 	 * A dummy authentication store containing known user names and passwords.
