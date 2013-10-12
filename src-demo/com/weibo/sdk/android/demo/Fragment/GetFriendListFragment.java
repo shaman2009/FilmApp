@@ -134,13 +134,6 @@ public class GetFriendListFragment extends Fragment {
 								selectMap.add(d);
 								Log.d("qwe", d.mName);
 						}
-//						getActivity().runOnUiThread(new Runnable() {
-//							
-//							@Override
-//							public void run() {
-//								mAdapter.notifyDataSetChanged();
-//							}
-//						});
 					}
 				});
 				return convertView;

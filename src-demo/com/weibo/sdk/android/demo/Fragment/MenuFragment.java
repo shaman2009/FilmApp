@@ -45,7 +45,7 @@ public class MenuFragment extends ListFragment {
 			newContent = new MoviesFragment();
 			break;
 		case 2:
-			newContent = new ColorFragment(R.color.blue);
+			newContent = new PublicTimelineFragment();
 			break;
 		case 3:
 			newContent = new ColorFragment(android.R.color.white);

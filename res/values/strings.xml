@@ -61,5 +61,6 @@
     <string name="setting_account_binding_no">unbind</string>
     <string name="title_activity_setting_account_binding">SocialAccount</string>
     <string name="hello_world">Hello world!</string>
+    <string name="label_loading">Loading...</string>
 
 </resources>
