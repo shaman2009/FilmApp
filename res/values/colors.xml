@@ -28,4 +28,12 @@
     <color name="blue">#009</color>
     <color name="white">#FFF</color>
     <color name="black">#000</color>
+    <color name="highlight">#3188d5</color><!-- 高度区域的颜色  #2078c8-->
+	<color name="emphasize">#5986d3</color><!-- 强调区域颜色，如需突出的部分，时间或转发评论 -->
+	<color name="content">#000000</color><!-- 内容文字的主颜色 -->
+	<color name="quote">#666666</color><!-- 引用区域的颜色 -->
+	<color name="link">#2078c8</color><!-- 链接,##,@的颜色 -->
+	
+	
+
 </resources>

@@ -1,11 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<!--     <style name="AppTheme" parent="android:Theme.Light" /> -->
+    <style name="list_status_response">
+        <item name="android:textSize">@dimen/list_status_response</item>
+        <item name="android:textColor">@color/emphasize</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:typeface">sans</item>
+    </style>
+
+    <style name="list_status_source">
+        <item name="android:textSize">@dimen/list_status_source</item>
+        <item name="android:textColor">@color/quote</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:typeface">sans</item>
+    </style>
+
+    <style name="list_status_text">
+        <item name="android:textSize">@dimen/list_status_text</item>
+        <item name="android:textColor">@color/content</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:typeface">sans</item>
+        <!-- <item name="android:lineSpacingExtra">@dimen/content_line_spacing_extra</item> -->
+        <item name="android:lineSpacingMultiplier">1.2</item>
+    </style>
+
+    <style name="list_status_screen_name">
+        <item name="android:textSize">@dimen/list_status_screen_name</item>
+        <item name="android:textColor">@color/highlight</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:typeface">sans</item>
+    </style>
+
+    <style name="list_status_time_read">
+        <item name="android:textSize">@dimen/list_status_time</item>
+        <item name="android:textColor">@color/emphasize</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:typeface">sans</item>
+    </style>
+    <!-- <style name="AppTheme" parent="android:Theme.Light" /> -->
     <style name="AppTheme" parent="Theme.Sherlock.Light.DarkActionBar">
         <item name="homeAsUpIndicator">@drawable/new_indicator</item>
         <item name="android:homeAsUpIndicator">@drawable/new_indicator</item>
     </style>
+
     <style name="FullscreenTheme" parent="android:Theme.NoTitleBar">
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@null</item>
