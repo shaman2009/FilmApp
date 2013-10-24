@@ -1,8 +1,11 @@
 package com.weibo.sdk.android.demo.Fragment;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
+import android.content.SharedPreferences.Editor;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -64,6 +67,10 @@ public class MenuFragment extends ListFragment {
 				public void onClick(DialogInterface dialog, int which) {
 					
 //					LoginActivity loginActivity = new LoginActivity();
+					SharedPreferences pref = getActivity().getSharedPreferences(PostFragment.USERID,Context.MODE_APPEND);
+					Editor editor = pref.edit();
+					editor.putString("userId", "");
+					editor.commit();
 					LoginActivity.deleteloginsession(getActivity());
 					Intent intent = new Intent(getActivity(), LoginActivity.class);
 				    startActivity(intent);
