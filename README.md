@@ -1,9 +1,6 @@
 FilmApp
 =======
 
-app wiz fei
-
-
 ###For Dream
 
 - 新浪微博登录
